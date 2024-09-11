@@ -1,11 +1,14 @@
 import {
-    timestamp,
-    pgTable,
-    text,
-    primaryKey,
-    integer,
-    uniqueIndex,
-} from "drizzle-orm/pg-core"
+  timestamp,
+  pgTable,
+  text,
+  primaryKey,
+  integer,
+  uniqueIndex,
+  pgEnum,
+} from "drizzle-orm/pg-core";
+
+export const userRole = pgEnum("role", ["ADMIN", "STAFF", "USER"]);
 
 export const users = pgTable("users", {
   id: text("id")
@@ -16,8 +19,9 @@ export const users = pgTable("users", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   password: text("password"),
+  role: userRole("role").notNull().default("USER"),
 })
- 
+
 export const accounts = pgTable(
   "accounts",
   {
@@ -37,5 +41,5 @@ export const accounts = pgTable(
   },
   (table) => ({
     uniqueProviderAccount: uniqueIndex("unique_provider_account").on(table.provider, table.providerAccountId),
-})
+  })
 )

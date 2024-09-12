@@ -12,7 +12,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = db.query.users.findMany();
+  const user = db.query.user.findMany();
 
   return (
     <html lang="en">

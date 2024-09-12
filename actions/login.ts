@@ -11,7 +11,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     const validatedFields = LoginSchema.safeParse(values);
 
     if (!validatedFields.success) {
-        return { error: "Invalid fields" };
+        return { error: "Trường không hợp lệ" };
     }
 
     const { email, password } = validatedFields.data;
@@ -26,9 +26,9 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
         if (error instanceof AuthError) {
             switch (error.type) {
                 case "CredentialsSignin":
-                    return { error: "Invalid credentials" };
+                    return { error: "Thông tin xác thực không hợp lệ" };
                 default:
-                    return { error: "Something went wrong" };
+                    return { error: "Có gì đó không đúng" };
             }
         }
 

@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
   timestamp,
   pgTable,
@@ -6,11 +7,13 @@ import {
   integer,
   uniqueIndex,
   pgEnum,
+  unique,
 } from "drizzle-orm/pg-core";
+import type { AdapterAccountType } from "next-auth/adapters"
 
 export const userRole = pgEnum("role", ["ADMIN", "STAFF", "USER"]);
 
-export const users = pgTable("users", {
+export const user = pgTable("user", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
@@ -20,15 +23,15 @@ export const users = pgTable("users", {
   image: text("image"),
   password: text("password"),
   role: userRole("role").notNull().default("USER"),
-})
+});
 
-export const accounts = pgTable(
-  "accounts",
+export const account = pgTable(
+  "account",
   {
     userId: text("userId")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    type: text("type").notNull(),
+      .references(() => user.id, { onDelete: "cascade" }),
+      type: text("type").$type<AdapterAccountType>().notNull(),
     provider: text("provider").notNull(),
     providerAccountId: text("providerAccountId").notNull(),
     refresh_token: text("refresh_token"),
@@ -39,7 +42,9 @@ export const accounts = pgTable(
     id_token: text("id_token"),
     session_state: text("session_state"),
   },
-  (table) => ({
-    uniqueProviderAccount: uniqueIndex("unique_provider_account").on(table.provider, table.providerAccountId),
+  (account) => ({
+    compoundKey: primaryKey({
+      columns: [account.provider, account.providerAccountId],
+    }),
   })
 )

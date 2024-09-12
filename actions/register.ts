@@ -5,14 +5,14 @@ import * as z from 'zod';
 import bcrypt from "bcryptjs";
 
 import { RegisterSchema } from '@/schemas';
-import { users } from "@/db/schema";
+import { user } from "@/db/schema";
 import { getUserByEmail } from "@/data/user";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const validatedFields = RegisterSchema.safeParse(values);
 
     if (!validatedFields.success) {
-        return { error: "Invalid fields" };
+        return { error: "Trường không hợp lệ" };
     }
 
     const { email, password, name } = validatedFields.data;
@@ -21,10 +21,10 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
-        return { error: "Email already exists" };
+        return { error: "Email đã được sử dụng" };
     }
 
-    await db.insert(users).values({
+    await db.insert(user).values({
         name,
         email,
         password: hashedPassword,
@@ -32,5 +32,5 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
     //TODO: Send email verification
 
-    return { success: "User created!" };
+    return { success: "Đăng kí tài khoản thành công" };
 };

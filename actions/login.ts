@@ -28,10 +28,14 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     if (!existingUser.emailVerified) {
         const verificationToken = await generateVerificationToken(existingUser.email);
 
-        await sendVerificationEmail(
-            verificationToken.email,
-            verificationToken.token
-        )
+        if (verificationToken.email && verificationToken.token) {
+            await sendVerificationEmail(
+                verificationToken.email,
+                verificationToken.token
+            );
+        } else {
+            return { error: "Xảy ra lỗi trong quá trình xác thực" };
+        }
 
         return { success: "Đã gửi email xác thực" };
     }

@@ -34,10 +34,14 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
     const verificationToken = await generateVerificationToken(email);
 
-    await sendVerificationEmail(
-        verificationToken.email,
-        verificationToken.token
-    )
+    if (verificationToken.email && verificationToken.token) {
+        await sendVerificationEmail(
+            verificationToken.email,
+            verificationToken.token
+        );
+    } else {
+        return { error: "Xảy ra lỗi trong quá trình xác thực" };
+    }
 
     return { success: "Đã gửi email xác thực" };
 };

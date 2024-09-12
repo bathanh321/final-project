@@ -7,6 +7,8 @@ import bcrypt from "bcryptjs";
 import { RegisterSchema } from '@/schemas';
 import { user } from "@/db/schema";
 import { getUserByEmail } from "@/data/user";
+import { generateVerificationToken } from "@/lib/token";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const validatedFields = RegisterSchema.safeParse(values);
@@ -30,7 +32,12 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         password: hashedPassword,
     }).returning();
 
-    //TODO: Send email verification
+    const verificationToken = await generateVerificationToken(email);
 
-    return { success: "Đăng kí tài khoản thành công" };
+    await sendVerificationEmail(
+        verificationToken.email,
+        verificationToken.token
+    )
+
+    return { success: "Đã gửi email xác thực" };
 };

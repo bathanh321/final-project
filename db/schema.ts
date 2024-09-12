@@ -31,7 +31,7 @@ export const account = pgTable(
     userId: text("userId")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-      type: text("type").$type<AdapterAccountType>().notNull(),
+    type: text("type").$type<AdapterAccountType>().notNull(),
     provider: text("provider").notNull(),
     providerAccountId: text("providerAccountId").notNull(),
     refresh_token: text("refresh_token"),
@@ -47,4 +47,15 @@ export const account = pgTable(
       columns: [account.provider, account.providerAccountId],
     }),
   })
-)
+);
+
+export const verificationToken = pgTable("verification_token", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  email: text("email"),
+  token: text("token").unique(),
+  expires: timestamp("expires", { mode: "date" }),
+}, (verificationToken) => ({
+  uniqueEmailToken: uniqueIndex('unique_email_token_index').on(verificationToken.email, verificationToken.token),
+}))

@@ -57,5 +57,16 @@ export const verificationToken = pgTable("verification_token", {
   token: text("token").unique(),
   expires: timestamp("expires", { mode: "date" }),
 }, (verificationToken) => ({
-  uniqueEmailToken: uniqueIndex('unique_email_token_index').on(verificationToken.email, verificationToken.token),
-}))
+  uniqueEmailToken: uniqueIndex('unique_email_verification_token_index').on(verificationToken.email, verificationToken.token),
+}));
+
+export const passwordResetToken = pgTable("password_reset_token", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  email: text("email"),
+  token: text("token").unique(),
+  expires: timestamp("expires", { mode: "date" }),
+}, (passwordResetToken) => ({
+  uniqueEmailToken: uniqueIndex('unique_email_reset_token_index').on(passwordResetToken.email, passwordResetToken.token),
+}));

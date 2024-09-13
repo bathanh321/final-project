@@ -8,6 +8,13 @@
       "when": 1726137702841,
       "tag": "0000_little_hercules",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1726224094987,
+      "tag": "0001_nice_rhodey",
+      "breakpoints": true
     }
   ]
 }

@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1726137702841,
-      "tag": "0000_little_hercules",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1726224094987,
-      "tag": "0001_nice_rhodey",
+      "when": 1727346254776,
+      "tag": "0000_slippery_golden_guardian",
       "breakpoints": true
     }
   ]

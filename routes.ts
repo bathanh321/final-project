@@ -6,12 +6,13 @@
 
 export const publicRoutes = [
     "/",
+    "/api/uploadthing",
     "/auth/new-verification",
 ];
 
 /**
  * An array of routes that are use for authentication.
- * These routes will redirect logged in users to /settings.
+ * These routes will redirect logged in users to /(marketing page).
  * @type {string[]}
  */
 
@@ -36,4 +37,4 @@ export const apiAuthPrefix = "/api/auth";
  * @type {string}
  */
 
-export const DEFAULT_LOGIN_REDIRECT = "/settings";
+export const DEFAULT_LOGIN_REDIRECT = "/";

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import db from "@/db/drizzle";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
+import { ToastProvider } from "@/components/providers/toaster-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,15 +15,18 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = db.query.user.findMany();
+  const session = await auth();
 
   return (
-    <html lang="en">
-      <body
-        className={`antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang="en">
+        <body
+          className={`antialiased`}
+        >
+          <ToastProvider/>
+          {children}
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

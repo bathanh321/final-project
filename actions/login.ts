@@ -6,9 +6,11 @@ import { LoginSchema } from '@/schemas';
 import { signIn } from '@/auth';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { AuthError } from 'next-auth';
-import { generateVerificationToken } from '@/lib/token';
+import { generateVerificationToken } from '@/lib/tokens';
 import { getUserByEmail } from '@/data/user';
 import { sendVerificationEmail } from '@/lib/mail';
+import db from '@/db/drizzle';
+import { eq } from 'drizzle-orm';
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
     const validatedFields = LoginSchema.safeParse(values);
@@ -17,7 +19,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
         return { error: "Trường không hợp lệ" };
     }
 
-    const { email, password } = validatedFields.data;
+    const { email, password, code } = validatedFields.data;
 
     const existingUser = await getUserByEmail(email);
 

@@ -18,7 +18,8 @@ export const LoginSchema = z.object({
     }),
     password: z.string().min(1, {
         message: "Mật khẩu là bắt buộc"
-    })
+    }),
+    code: z.optional(z.string()),
 });
 
 export const RegisterSchema = z.object({
@@ -32,3 +33,15 @@ export const RegisterSchema = z.object({
         message: "Yêu cầu nhập tên"
     })
 });
+
+export const CourseSchemaTitle = z.object({
+    title: z.string().min(1, {
+        message: "Yêu cầu nhập tiêu đề"
+    }),
+})
+
+export const CourseSchemaImage = z.object({
+    imageSrc: z.string().min(1, {
+        message: "Yêu cầu nhập ảnh"
+    }),
+})

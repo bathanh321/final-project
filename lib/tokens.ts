@@ -4,6 +4,7 @@ import db from '@/db/drizzle';
 import { passwordResetToken, verificationToken } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
+import crypto from "crypto";
 
 export const generatePasswordResetToken = async (email: string) => {
     const token = uuidv4();

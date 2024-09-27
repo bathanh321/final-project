@@ -24,6 +24,7 @@ import { FormSuccess } from '../form-success';
 import { login } from '@/actions/login';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { EyeIcon } from 'lucide-react';
 
 export const LoginForm = () => {
     const searchParams = useSearchParams();
@@ -51,16 +52,26 @@ export const LoginForm = () => {
         startTransition(() => {
             login(values)
                 .then((data) => {
-                    setError(data?.error);
-                    setSuccess(data?.success);
+                    if (data?.error) {
+                        form.reset();
+                        setError(data.error);
+                    }
+
+                    if (data?.success) {
+                        form.reset();
+                        setSuccess(data.success);
+                    }
                 })
+                .catch(() => {
+                    setError("Đã xảy ra lỗi không xác định");
+                });
         });
     }
 
     return (
         <CardWrapper
             headerLabel="Chào mừng trở lại"
-            backButtonLabel="Chưa có tài khoản?"
+            backButtonLabel="Quay lại"
             backButtonHref="/auth/register"
             showSocial
         >

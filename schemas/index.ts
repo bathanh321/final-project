@@ -45,3 +45,7 @@ export const CourseSchemaImage = z.object({
         message: "Yêu cầu nhập ảnh"
     }),
 })
+
+export const CourseSchemaUnits = z.object({
+    title: z.string().min(1),
+})

@@ -10,12 +10,26 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Pencil } from "lucide-react";
-import { CourseSchemaTitle } from "@/schemas";
+import { Pencil, PlusCircle } from "lucide-react";
+import { CourseSchemaTitle, CourseSchemaUnits } from "@/schemas";
+import { cn } from "@/lib/utils";
+import { UnitsList } from "./units-list";
+import { ClimbingBoxLoader } from "react-spinners";
+
+interface Unit {
+    id: number;
+    title: string;
+    description: string;
+    isPublished: boolean;
+    order: number;
+}
 
 interface UnitsFormProps {
     initialData: {
         title: string;
+        imageSrc: string | null;
+        isPublished: boolean | null;
+        units: Unit[];
     },
     courseId: number;
 }
@@ -25,22 +39,27 @@ export const UnitsForm = ({
     courseId
 }: UnitsFormProps) => {
     const router = useRouter();
-    const [isEditing, setIsEditing] = useState(false);
+    const [isCreating, setIsCreating] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
 
-    const toggleEdit = () => setIsEditing((current) => !current);
+    const toggleCreating = () => {
+        setIsCreating((current) => !current);
+    }
 
-    const form = useForm<z.infer<typeof CourseSchemaTitle>>({
-        resolver: zodResolver(CourseSchemaTitle),
+    const form = useForm<z.infer<typeof CourseSchemaUnits>>({
+        resolver: zodResolver(CourseSchemaUnits),
         defaultValues: {
-            title: initialData.title,
+            title: "",
         },
     });
 
+    const { isSubmitting, isValid } = form.formState;
+
     const onSubmit = async (values: z.infer<typeof CourseSchemaTitle>) => {
         try {
-            await axios.patch(`/api/staff/courses/${courseId}`, values);
-            toast.success("Course updated");
-            toggleEdit();
+            await axios.post(`/api/staff/courses/${courseId}/units`, values);
+            toast.success("Unit created");
+            toggleCreating();
             router.refresh();
         } catch (error) {
             toast.error("Something went wrong");
@@ -48,29 +67,44 @@ export const UnitsForm = ({
         }
     };
 
+    const onReorder = async (updatedData: { id: number, order: number }[]) => {
+        try {
+            setIsUpdating(true);
+
+            await axios.put(`/api/staff/courses/${courseId}/units/reorder`, {
+                list: updatedData,
+            });
+
+            toast.success("Units reordered");
+            router.refresh();
+        } catch {
+            toast.error("Something went wrong");
+        } finally {
+            setIsUpdating(false);
+        }
+    }
+
     return (
-        <div className="mt-6 border bg-slate-100 rounded-md p-4">
+        <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
+            {isUpdating && (
+                <div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-md flex items-center justify-center">
+                    <ClimbingBoxLoader className="text-sky-700"/>
+                </div>
+            )}
             <div className="font-medium flex items-center justify-between">
-                Course information
-                <Button onClick={toggleEdit} variant="ghost">
-                    {isEditing ? (
+                Course units
+                <Button onClick={toggleCreating} variant="ghost">
+                    {isCreating ? (
                         <>Cancel</>
                     ) : (
                         <>
-                            <Pencil className="h-4 w-4 mr-2" />
-                            Edit course
+                            <PlusCircle className="h-4 w-4 mr-2" />
+                            Add an unit
                         </>
                     )}
                 </Button>
             </div>
-            {!isEditing && (
-                <>
-                    <p className="text-sm mt-2">
-                        Title: {initialData.title}
-                    </p>
-                </>
-            )}
-            {isEditing && (
+            {isCreating && (
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
@@ -83,8 +117,8 @@ export const UnitsForm = ({
                                 <FormItem>
                                     <FormControl>
                                         <Input
-                                            disabled={false}
-                                            placeholder="Title"
+                                            disabled={isSubmitting}
+                                            placeholder="e.g. 'Introduction'"
                                             {...field}
                                         />
                                     </FormControl>
@@ -92,16 +126,32 @@ export const UnitsForm = ({
                                 </FormItem>
                             )}
                         />
-                        <div className="flex items-center gap-x-2">
-                            <Button
-                                disabled={false}
-                                type="submit"
-                            >
-                                Save
-                            </Button>
-                        </div>
+                        <Button
+                            disabled={!isValid || isSubmitting}
+                            type="submit"
+                        >
+                            Create
+                        </Button>
                     </form>
                 </Form>
+            )}
+            {!isCreating && (
+                <div className={cn(
+                    "text-sm mt-2",
+                    !initialData.units?.length && "text-slate-500 italic"
+                )}>
+                    {!initialData.units?.length && "No units"}
+                    <UnitsList
+                        onEdit={() => { }}
+                        onReorder={onReorder}
+                        items={initialData.units || []}
+                    />
+                </div>
+            )}
+            {!isCreating && (
+                <p className="text-xs text-muted-foreground mt-4">
+                    Drag and drop to reorder the chapters
+                </p>
             )}
         </div>
     );

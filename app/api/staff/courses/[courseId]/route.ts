@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export const PATCH = async (
     req: Request,
-    { params }: { params: { courseId: string } }
+    { params }: { params: { courseId: number } }
 ) => {
     try {
         const session = await auth()
@@ -22,14 +22,8 @@ export const PATCH = async (
         const { courseId } = params;
         const values = await req.json();
 
-        const courseIdNumber = Number(courseId);
-
-        if (isNaN(courseIdNumber)) {
-            return new NextResponse("Invalid course ID", { status: 400 });
-        }
-
         const course = await db.update(courses).set(values)
-            .where(eq(courses.id, courseIdNumber))
+            .where(eq(courses.id, params.courseId))
             .returning();
 
         return NextResponse.json(course);

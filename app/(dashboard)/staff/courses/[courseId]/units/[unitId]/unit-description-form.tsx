@@ -11,35 +11,38 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Pencil } from "lucide-react";
-import { CourseSchemaTitle } from "@/schemas";
+import { UnitSchemaDescription } from "@/schemas";
+import { cn } from "@/lib/utils";
 
-interface TitleFormProps {
+interface UnitDescriptionFormProps {
     initialData: {
-        title: string;
+        description: string | null;
     },
     courseId: number;
+    unitId: number;
 }
 
-export const TitleForm = ({
+export const UnitDescriptionForm = ({
     initialData,
-    courseId
-}: TitleFormProps) => {
+    courseId,
+    unitId
+}: UnitDescriptionFormProps) => {
     const router = useRouter();
     const [isEditing, setIsEditing] = useState(false);
 
     const toggleEdit = () => setIsEditing((current) => !current);
 
-    const form = useForm<z.infer<typeof CourseSchemaTitle>>({
-        resolver: zodResolver(CourseSchemaTitle),
+    const form = useForm<z.infer<typeof UnitSchemaDescription>>({
+        resolver: zodResolver(UnitSchemaDescription),
         defaultValues: {
-            title: initialData.title,
+            description: initialData.description || "",
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof CourseSchemaTitle>) => {
+    const onSubmit = async (values: z.infer<typeof UnitSchemaDescription>) => {
         try {
-            await axios.patch(`/api/staff/courses/${courseId}`, values);
-            toast.success("Course updated");
+            await axios.patch(`/api/staff/courses/${courseId}/units/${unitId}`, values);
+            toast.success("Unit updated");
             toggleEdit();
             router.refresh();
         } catch (error) {
@@ -51,7 +54,7 @@ export const TitleForm = ({
     return (
         <div className="mt-6 border bg-slate-100 rounded-md p-4">
             <div className="font-medium flex items-center justify-between">
-                Course information
+                Unit description
                 <Button onClick={toggleEdit} variant="ghost">
                     {isEditing ? (
                         <>Cancel</>
@@ -65,8 +68,11 @@ export const TitleForm = ({
             </div>
             {!isEditing && (
                 <>
-                    <p className="text-sm mt-2">
-                        {initialData.title}
+                    <p className={cn(
+                        "text-sm mt-2",
+                        !initialData.description && "text-slate-500 italic"
+                    )}>
+                        {initialData.description || "No description"}
                     </p>
                 </>
             )}
@@ -78,13 +84,13 @@ export const TitleForm = ({
                     >
                         <FormField
                             control={form.control}
-                            name="title"
+                            name="description"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
                                         <Input
                                             disabled={false}
-                                            placeholder="Title"
+                                            placeholder="Some description"
                                             {...field}
                                         />
                                     </FormControl>

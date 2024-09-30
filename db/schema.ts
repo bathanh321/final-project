@@ -112,10 +112,10 @@ export const challengesEnum = pgEnum("type", ["SELECT", "ASSIST"]);
 export const challenges = pgTable("challenges", {
   id: serial("id").primaryKey(),
   lessonId: integer("lesson_id").references(() => lessons.id, { onDelete: "cascade" }).notNull(),
-  type: challengesEnum("type").notNull(),
-  question: text("question").notNull(),
-  difficultLevel: integer("difficult_level").notNull(),
-  isPublished: boolean("is_published").notNull().default(false),
+  type: challengesEnum("type"),
+  question: text("question"),
+  difficultLevel: integer("difficult_level"),
+  isPublished: boolean("is_published").default(false),
   order: integer("order").notNull(),
 });
 
@@ -123,8 +123,8 @@ export const challenges = pgTable("challenges", {
 export const challengeOptions = pgTable("challenge_options", {
   id: serial("id").primaryKey(),
   challengeId: integer("challenge_id").references(() => challenges.id, { onDelete: "cascade" }).notNull(),
-  text: text("text").notNull(),
-  correct: boolean("correct").notNull(),
+  text: text("text"),
+  correct: boolean("correct").notNull().default(false),
   imageSrc: text("image_src"),
   audioSrc: text("audio_src"),
 });

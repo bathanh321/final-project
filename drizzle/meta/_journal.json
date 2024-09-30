@@ -15,6 +15,13 @@
       "when": 1727543310423,
       "tag": "0001_glamorous_shiver_man",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1727720714151,
+      "tag": "0002_uneven_calypso",
+      "breakpoints": true
     }
   ]
 }

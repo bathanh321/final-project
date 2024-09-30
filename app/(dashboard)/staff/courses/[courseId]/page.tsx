@@ -22,10 +22,6 @@ interface Unit {
 }
 
 interface CourseIdPageProps {
-    initialData: {
-        title: string;
-        imageSrc: string;
-    }
     params: {
         courseId: number;
     }
@@ -33,11 +29,12 @@ interface CourseIdPageProps {
 
 const CourseIdPage = async ({
     params,
-    initialData,
 }: CourseIdPageProps) => {
     const user = auth();
 
-
+    if (!user) {
+        return redirect("/auth/login");
+    }
 
     const data = await db
         .select({

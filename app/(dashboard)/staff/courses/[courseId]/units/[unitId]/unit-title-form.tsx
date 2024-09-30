@@ -11,35 +11,37 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Pencil } from "lucide-react";
-import { CourseSchemaTitle } from "@/schemas";
+import { UnitSchemaTitle } from "@/schemas";
 
-interface TitleFormProps {
+interface UnitTitleFormProps {
     initialData: {
-        title: string;
+        title: string | null;
     },
     courseId: number;
+    unitId: number;
 }
 
-export const TitleForm = ({
+export const UnitTitleForm = ({
     initialData,
-    courseId
-}: TitleFormProps) => {
+    courseId,
+    unitId
+}: UnitTitleFormProps) => {
     const router = useRouter();
     const [isEditing, setIsEditing] = useState(false);
 
     const toggleEdit = () => setIsEditing((current) => !current);
 
-    const form = useForm<z.infer<typeof CourseSchemaTitle>>({
-        resolver: zodResolver(CourseSchemaTitle),
+    const form = useForm<z.infer<typeof UnitSchemaTitle>>({
+        resolver: zodResolver(UnitSchemaTitle),
         defaultValues: {
-            title: initialData.title,
+            title: initialData.title || "",
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof CourseSchemaTitle>) => {
+    const onSubmit = async (values: z.infer<typeof UnitSchemaTitle>) => {
         try {
-            await axios.patch(`/api/staff/courses/${courseId}`, values);
-            toast.success("Course updated");
+            await axios.patch(`/api/staff/courses/${courseId}/units/${unitId}`, values);
+            toast.success("Unit updated");
             toggleEdit();
             router.refresh();
         } catch (error) {
@@ -51,7 +53,7 @@ export const TitleForm = ({
     return (
         <div className="mt-6 border bg-slate-100 rounded-md p-4">
             <div className="font-medium flex items-center justify-between">
-                Course information
+                Unit title
                 <Button onClick={toggleEdit} variant="ghost">
                     {isEditing ? (
                         <>Cancel</>
@@ -84,7 +86,7 @@ export const TitleForm = ({
                                     <FormControl>
                                         <Input
                                             disabled={false}
-                                            placeholder="Title"
+                                            placeholder="Introduction"
                                             {...field}
                                         />
                                     </FormControl>

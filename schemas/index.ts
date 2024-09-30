@@ -49,3 +49,15 @@ export const CourseSchemaImage = z.object({
 export const CourseSchemaUnits = z.object({
     title: z.string().min(1),
 })
+
+export const UnitSchemaTitle = z.object({
+    title: z.string().min(1, {
+        message: "Yêu cầu nhập tiêu đề"
+    }),
+})
+
+export const UnitSchemaDescription = z.object({
+    description: z.string().min(1, {
+        message: "Yêu cầu nhập mô tả"
+    }),
+})

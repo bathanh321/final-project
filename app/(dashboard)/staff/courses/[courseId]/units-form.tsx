@@ -10,7 +10,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Pencil, PlusCircle } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { CourseSchemaTitle, CourseSchemaUnits } from "@/schemas";
 import { cn } from "@/lib/utils";
 import { UnitsList } from "./units-list";
@@ -84,6 +84,10 @@ export const UnitsForm = ({
         }
     }
 
+    const onEdit = (id: number) => {
+        router.push(`/staff/courses/${courseId}/units/${id}`);
+    }
+
     return (
         <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
             {isUpdating && (
@@ -142,7 +146,7 @@ export const UnitsForm = ({
                 )}>
                     {!initialData.units?.length && "No units"}
                     <UnitsList
-                        onEdit={() => { }}
+                        onEdit={onEdit}
                         onReorder={onReorder}
                         items={initialData.units || []}
                     />

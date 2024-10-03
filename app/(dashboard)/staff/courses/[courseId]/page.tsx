@@ -58,10 +58,6 @@ const CourseIdPage = async ({
         return redirect("/");
     }
 
-    if (!data.length) {
-        return redirect("/");
-    }
-
     const course = {
         id: data[0].courseId,
         title: data[0].courseTitle,

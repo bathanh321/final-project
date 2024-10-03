@@ -52,6 +52,10 @@ export const Sidebar = ({ className }: Props) => {
                                 href="/staff/courses"
                             />
                             <SidebarItem
+                                label="Units"
+                                href="/staff/units"
+                            />
+                            <SidebarItem
                                 label="Lessons"
                                 href="/staff/lessons"
                             />

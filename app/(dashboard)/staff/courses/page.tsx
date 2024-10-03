@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -9,87 +9,29 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import db from "@/db/drizzle";
+import { auth } from "@/auth";
 
-const CreatePage = () => {
-    const router = useRouter();
-    const form = useForm<z.infer<typeof CourseSchemaTitle>>({
-        resolver: zodResolver(CourseSchemaTitle),
-        defaultValues: {
-          title: "",
-        },
-      });
+const CoursePage = async () => {
+    const user = auth();
 
-      const onSubmit = async (values: z.infer<typeof CourseSchemaTitle>) => {
-        try {
-            const response = await axios.post("/api/staff/courses", values);
-            console.log(response.data.id);
-            router.push(`/staff/courses/${response.data.id}`);
-            toast.success("Course created");
-        } catch (error) {
-            toast.error("Something went wrong");
-            console.log(error);
-        }
-      }
+    if(!user) {
+        return redirect("/auth/login");
+    }
+
+    const courses = await db.query.courses.findMany()
 
     return (
-        <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6">
-        <div>
-          <h1 className="text-2xl">
-            Name your course
-          </h1>
-          <p className="text-sm text-slate-600">
-            What would you like to name your course? Don&apos;t worry, you can change this later.
-          </p>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-8 mt-8"
-            >
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Course title
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled={false}
-                        placeholder="e.g. 'Advanced web development'"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      What will you teach in this course?
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="flex items-center gap-x-2">
-                <Link href="/">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                  >
-                    Cancel
-                  </Button>
-                </Link>
-                <Button
-                  type="submit"
-                  disabled={false}
-                >
-                  Continue
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </div>
+        <div className="p-6">
+        
+        <DataTable columns={columns} data={courses} />
       </div>
     );
 }
 
-export default CreatePage;
+export default CoursePage;

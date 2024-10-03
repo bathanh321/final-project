@@ -90,7 +90,7 @@ export const courses = pgTable("courses", {
 // Units Table
 export const units = pgTable("units", {
   id: serial("id").primaryKey(),
-  title: text("title"),
+  title: text("title").notNull(),
   description: text("description"),
   courseId: integer("course_id").references(() => courses.id, { onDelete: "cascade" }).notNull(),
   isPublished: boolean("is_published").default(false),
@@ -100,7 +100,7 @@ export const units = pgTable("units", {
 // Lessons Table
 export const lessons = pgTable("lessons", {
   id: serial("id").primaryKey(),
-  title: text("title"),
+  title: text("title").notNull(),
   unitId: integer("unit_id").references(() => units.id, { onDelete: "cascade" }).notNull(),
   isPublished: boolean("is_published").default(false),
   order: integer("order").notNull(),

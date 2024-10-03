@@ -61,3 +61,25 @@ export const UnitSchemaDescription = z.object({
         message: "Yêu cầu nhập mô tả"
     }),
 })
+
+export const UnitSchemaLesson = z.object({
+    title: z.string().min(1),
+})
+
+export const LessonSchemaTitle = z.object({
+    title: z.string().min(1, {
+        message: "Yêu cầu nhập tiêu đề"
+    }),
+})
+
+export const ChallengeSchema = z.object({
+    question: z.string().min(1, {
+        message: "Yêu cầu nhập câu hỏi"
+    }),
+    type: z.enum(["SELECT", "ASSIST"], {
+        message: "Yêu cầu chọn loại"
+    }),
+    difficultLevel: z.string().min(1, {
+        message: "Yêu cầu chọn độ khó"
+    }),
+})

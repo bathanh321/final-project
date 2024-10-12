@@ -92,7 +92,7 @@ export const UnitsForm = ({
         <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
             {isUpdating && (
                 <div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-md flex items-center justify-center">
-                    <ClimbingBoxLoader className="text-sky-700"/>
+                    <ClimbingBoxLoader className="text-sky-700" />
                 </div>
             )}
             <div className="font-medium flex items-center justify-between">
@@ -144,12 +144,14 @@ export const UnitsForm = ({
                     "text-sm mt-2",
                     !initialData.units?.length && "text-slate-500 italic"
                 )}>
-                    {!initialData.units?.length && "No units"}
-                    <UnitsList
-                        onEdit={onEdit}
-                        onReorder={onReorder}
-                        items={initialData.units || []}
-                    />
+                    {!initialData.units?.length ? "No units" : (
+
+                        <UnitsList
+                            onEdit={onEdit}
+                            onReorder={onReorder}
+                            items={initialData.units || []}
+                        />
+                    )}
                 </div>
             )}
             {!isCreating && (

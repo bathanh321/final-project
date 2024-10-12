@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import { UnitTitleForm } from "./unit-title-form";
 import { UnitDescriptionForm } from "./unit-description-form";
 import { LessonsForm } from "./lessons-form";
+import { Actions } from "./actions";
 
 
 interface UnitIdPageProps {
@@ -77,6 +78,7 @@ const UnitIdPage = async ({
 
     const completionText = `(${completedFields}/${totalFields})`
 
+    const isCompleted = requiredFields.every(Boolean);
 
     return (
         <div className="p-6">
@@ -98,6 +100,12 @@ const UnitIdPage = async ({
                                 Complete all fields {completionText}
                             </span>
                         </div>
+                        <Actions
+                            disabled={!isCompleted}
+                            courseId={params.courseId}
+                            unitId={params.unitId}
+                            isPublished={unit.isPublished}
+                        />
                     </div>
                 </div>
             </div>

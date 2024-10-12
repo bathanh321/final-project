@@ -22,11 +22,6 @@ import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 
 interface CreateChallengesPageProps {
-    initialData: {
-        question: string | null;
-        type: "SELECT" | "ASSIST";
-        difficultLevel: number;
-    }
     params: {
         courseId: number;
         unitId: number;
@@ -41,7 +36,6 @@ const options = [
 
 const CreateChallengesPage = ({
     params,
-    initialData,
 }: CreateChallengesPageProps) => {
     const router = useRouter();
     const [value, setValue] = useState("");
@@ -71,7 +65,7 @@ const CreateChallengesPage = ({
             <div className="flex items-center justify-between">
                 <div className="w-full">
                     <Link
-                        href={`/staff/courses/${params.courseId}/units/${params.unitId}`}
+                        href={`/staff/courses/${params.courseId}/units/${params.unitId}/lessons/${params.lessonId}`}
                         className="flex items-center text-sm hover:opacity-75 transition mb-6"
                     >
                         <ArrowLeft className="size-4 mr-2" />
@@ -106,7 +100,7 @@ const CreateChallengesPage = ({
                                     <FormControl>
                                         <Input
                                             disabled={false}
-                                            placeholder="Quả táo trong tiếng Anh là gì?"
+                                            placeholder={"Quả táo trong tiếng Anh là gì?"}
                                             {...field}
                                         />
                                     </FormControl>

@@ -72,14 +72,20 @@ export const LessonSchemaTitle = z.object({
     }),
 })
 
-export const ChallengeSchema = z.object({
+export const ChallengeSchemaQuestion = z.object({
     question: z.string().min(1, {
         message: "Yêu cầu nhập câu hỏi"
     }),
-    type: z.enum(["SELECT", "ASSIST"], {
+})
+
+export const ChallengeSchemaType = z.object({
+    type: z.string().min(1, {
         message: "Yêu cầu chọn loại"
     }),
-    difficultLevel: z.string().min(1, {
-        message: "Yêu cầu chọn độ khó"
+})
+
+export const ChallengeSchemaDifficultLevel = z.object({
+    difficultLevel: z.number().min(1, {
+        message: "Yêu cầu nhập mức độ"
     }),
 })

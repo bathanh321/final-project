@@ -21,7 +21,6 @@ export const POST = async (req: Request) => {
             title,
             imageSrc,
         }).returning();
-
         return NextResponse.json(course)
     } catch (error) {
         console.log("[COURSES]", error);

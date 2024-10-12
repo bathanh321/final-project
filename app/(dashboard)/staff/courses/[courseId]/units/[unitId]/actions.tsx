@@ -11,12 +11,14 @@ import toast from "react-hot-toast";
 interface ActionsProps {
     disabled: boolean;
     courseId: number;
+    unitId: number;
     isPublished: boolean | null;
 }
 
 export const Actions = ({
     disabled,
     courseId,
+    unitId,
     isPublished
 }: ActionsProps) => {
     const router = useRouter();
@@ -27,11 +29,11 @@ export const Actions = ({
             setIsLoading(true);
 
             if(isPublished) {
-                await axios.patch(`/api/staff/courses/${courseId}/unpublish`);
-                toast.success("Course unpublished");
+                await axios.patch(`/api/staff/courses/${courseId}/units/${unitId}/unpublish`);
+                toast.success("Unit unpublished");
             } else {
-                await axios.patch(`/api/staff/courses/${courseId}/publish`);
-                toast.success("Course published");
+                await axios.patch(`/api/staff/courses/${courseId}/units/${unitId}/publish`);
+                toast.success("Unit published");
             }
 
             router.refresh();
@@ -46,10 +48,10 @@ export const Actions = ({
         try {
             setIsLoading(true);
 
-            await axios.delete(`/api/staff/courses/${courseId}`);
+            await axios.delete(`/api/staff/courses/${courseId}/units/${unitId}`);
 
-            toast.success("Course deleted successfully");
-            router.push("/staff/courses");
+            toast.success("Unit deleted successfully");
+            router.push(`/staff/courses/${courseId}`);
         } catch {
             toast.error("Something went wrong");
         } finally {

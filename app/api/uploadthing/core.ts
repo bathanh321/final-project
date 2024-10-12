@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import { useSession } from "next-auth/react";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();

@@ -7,8 +7,7 @@ import { ArrowLeft, LayoutDashboard, ListChecks } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { LessonTitleForm } from "./lesson-title-form";
-import { DataTable } from "./data-table";
-import { columns } from "./columns";
+import { ChallengesForm } from "./challenges-form";
 
 interface LessonIdPageProps {
     params: {
@@ -68,8 +67,6 @@ const LessonIdPage = async ({ params }: LessonIdPageProps) => {
         }))
     }
 
-    const challengeData = await db.query.challenges.findMany();
-
     const requiredFields = [
         lesson.title,
         lesson.challenges.some((challenge) => challenge.isPublished)
@@ -102,7 +99,7 @@ const LessonIdPage = async ({ params }: LessonIdPageProps) => {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 gap-6 mt-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
                 <div className="space-y-4">
                     <div className="flex items-center gap-x-2">
                         <IconBadge icon={LayoutDashboard} />
@@ -125,11 +122,10 @@ const LessonIdPage = async ({ params }: LessonIdPageProps) => {
                                 Lesson Challenge
                             </h2>
                         </div>
-                        {lesson.challenges.length > 0 ? (
-                            <DataTable columns={columns} data={challengeData} />
-                        ) : (
-                            <p>No challenges found</p>
-                        )}
+                        <ChallengesForm
+                            initialData={lesson}
+                            lessonId={params.lessonId}
+                        />
                     </div>
                 </div>
             </div>

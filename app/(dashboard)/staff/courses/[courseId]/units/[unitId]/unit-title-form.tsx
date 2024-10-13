@@ -17,8 +17,8 @@ interface UnitTitleFormProps {
     initialData: {
         title: string | null;
     },
-    courseId: number;
-    unitId: number;
+    courseId: string;
+    unitId: string;
 }
 
 export const UnitTitleForm = ({

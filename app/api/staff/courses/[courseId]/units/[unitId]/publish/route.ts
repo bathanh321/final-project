@@ -1,12 +1,12 @@
 import { auth } from "@/auth";
 import db from "@/db/drizzle";
-import { courses, lessons, units } from "@/db/schema";
+import { lessons, units } from "@/db/schema";
 import { and, asc, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { courseId: number, unitId: number } }
+    { params }: { params: { courseId: string, unitId: string } }
 ) {
     try {
         const session = await auth();

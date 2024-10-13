@@ -11,13 +11,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { PlusCircle } from "lucide-react";
-import { ChallengeSchemaQuestion, LessonSchemaTitle, UnitSchemaLesson } from "@/schemas";
+import { ChallengeSchemaQuestion } from "@/schemas";
 import { cn } from "@/lib/utils";
-import { ClimbingBoxLoader } from "react-spinners";
 import { ChallengesList } from "./challenges-list";
 
 interface Challenge {
-    id: number;
+    id: string;
     question: string;
     type: "SELECT" | "ASSIST";
     difficultLevel: number;
@@ -32,7 +31,7 @@ interface ChallengesFormProps {
         order: number;
         challenges: Challenge[];
     },
-    lessonId: number;
+    lessonId: string;
 }
 
 export const ChallengesForm = ({
@@ -69,7 +68,7 @@ export const ChallengesForm = ({
         }
     };
 
-    const onEdit = (id: number) => {
+    const onEdit = (id: string) => {
         router.push(`/staff/courses/${courseId}/units/${params.unitId}/lessons/${params.lessonId}/challenges/${id}`);
     }
 
@@ -124,13 +123,12 @@ export const ChallengesForm = ({
                     "text-sm mt-2",
                     !initialData.challenges?.length && "text-slate-500 italic"
                 )}>
-                    {!initialData.challenges?.length || initialData.challenges[0].id === 0 ? "No challenges" : (
-
+                    {!initialData.challenges?.length && "No challenges"}
                         <ChallengesList
                             onEdit={onEdit}
-                            items={initialData.challenges}
+                            items={initialData.challenges || []}
                         />
-                    )}
+                    
                 </div>
             )}
         </div>

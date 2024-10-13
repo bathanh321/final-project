@@ -1,12 +1,13 @@
 import { auth } from "@/auth";
 import db from "@/db/drizzle";
 import { courses, units } from "@/db/schema";
+import { createId } from "@paralleldrive/cuid2";
 import { asc, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function POST(
     req: Request,
-    { params }: { params: { courseId: number } }
+    { params }: { params: { courseId: string } }
 ) {
     try {
         const session = await auth();
@@ -34,6 +35,7 @@ export async function POST(
         const newOrder = lastUnit ? lastUnit.order + 1 : 1;
 
         const unit = await db.insert(units).values({
+            id: createId(),
             title,
             courseId: params.courseId,
             order: newOrder,

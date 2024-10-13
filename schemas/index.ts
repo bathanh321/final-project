@@ -85,7 +85,29 @@ export const ChallengeSchemaType = z.object({
 })
 
 export const ChallengeSchemaDifficultLevel = z.object({
-    difficultLevel: z.number().min(1, {
-        message: "Yêu cầu nhập mức độ"
+    difficultLevel: z.coerce.number().min(1, {
+        message: "Yêu cầu chọn mức độ"
+    }),
+})
+
+export const ChallengeSchemaChallengeOption = z.object({
+    text: z.string().min(1, {
+        message: "Yêu cầu nhập câu trả lời"
+    }),
+})
+
+export const ChallengeOptionSchemaCorrect = z.object({
+    correct: z.boolean(),
+})
+
+export const ChallengeOptionSchemaImageSrc = z.object({
+    imageSrc: z.string().min(1, {
+        message: "Yêu cầu nhập ảnh"
+    }),
+})
+
+export const ChallengeOptionSchemaAudioSrc = z.object({
+    audioSrc: z.string().min(1, {
+        message: "Yêu cầu nhập âm thanh"
     }),
 })

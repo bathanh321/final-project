@@ -1,5 +1,5 @@
 {
-  "id": "8c3bffc3-0afe-4eae-961a-726e654f0a8e",
+  "id": "c7acf14f-07c5-4ef8-8045-4ffec6db8944",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -108,13 +108,13 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
         "challenge_id": {
           "name": "challenge_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -122,13 +122,14 @@
           "name": "text",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "correct": {
           "name": "correct",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": false
         },
         "image_src": {
           "name": "image_src",
@@ -168,7 +169,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -180,7 +181,7 @@
         },
         "challenge_id": {
           "name": "challenge_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -217,13 +218,13 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
         "lesson_id": {
           "name": "lesson_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -232,25 +233,25 @@
           "type": "type",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "question": {
           "name": "question",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "difficult_level": {
           "name": "difficult_level",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "is_published": {
           "name": "is_published",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": false
         },
         "order": {
@@ -285,7 +286,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -320,7 +321,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -332,7 +333,7 @@
         },
         "unit_id": {
           "name": "unit_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -340,7 +341,7 @@
           "name": "is_published",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": false
         },
         "order": {
@@ -439,7 +440,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -453,11 +454,11 @@
           "name": "description",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "course_id": {
           "name": "course_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -465,7 +466,7 @@
           "name": "is_published",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": false
         },
         "order": {
@@ -575,7 +576,7 @@
         },
         "active_course_id": {
           "name": "active_course_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },
@@ -619,7 +620,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },

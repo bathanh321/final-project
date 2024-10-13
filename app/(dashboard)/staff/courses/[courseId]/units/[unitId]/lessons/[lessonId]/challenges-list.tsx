@@ -4,7 +4,7 @@ import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface Challenge {
-    id: number;
+    id: string;
     question: string;
     type: "SELECT" | "ASSIST";
     difficultLevel: number;
@@ -14,7 +14,7 @@ interface Challenge {
 
 interface ChallengesListProps {
     items: Challenge[];
-    onEdit: (id: number) => void;
+    onEdit: (id: string) => void;
 }
 
 export const ChallengesList = ({
@@ -28,6 +28,10 @@ export const ChallengesList = ({
         setChallenges(items);
     }, [items]);
 
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
     if (!isMounted) {
         return null;
     }
@@ -38,15 +42,10 @@ export const ChallengesList = ({
                 <div
                     key={challenge.id}
                     className={cn(
-                        "flex items-center gap-x-2 bg-slate-200 border-slate-200 border text-slate-700 rounded-md mb-4 text-sm",
+                        "flex items-center gap-x-2 bg-slate-200 border-slate-200 border text-slate-700 rounded-md mb-4 text-sm py-3 px-5",
                         challenge.isPublished && "bg-sky-100 border-sky-200 text-sky-700"
                     )}
                 >
-                    <div className={cn(
-                        "px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition",
-                        challenge.isPublished && "border-r-sky-200 hover:bg-sky-200"
-                    )}>
-                    </div>
                     {challenge.question}
                     <div className="ml-auto pr-2 flex items-center gap-x-2">
                         <Badge className={cn(

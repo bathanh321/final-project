@@ -17,7 +17,7 @@ import { UnitsList } from "./units-list";
 import { ClimbingBoxLoader } from "react-spinners";
 
 interface Unit {
-    id: number;
+    id: string;
     title: string;
     description: string;
     isPublished: boolean;
@@ -31,7 +31,7 @@ interface UnitsFormProps {
         isPublished: boolean | null;
         units: Unit[];
     },
-    courseId: number;
+    courseId: string;
 }
 
 export const UnitsForm = ({
@@ -67,7 +67,7 @@ export const UnitsForm = ({
         }
     };
 
-    const onReorder = async (updatedData: { id: number, order: number }[]) => {
+    const onReorder = async (updatedData: { id: string, order: number }[]) => {
         try {
             setIsUpdating(true);
 
@@ -84,7 +84,7 @@ export const UnitsForm = ({
         }
     }
 
-    const onEdit = (id: number) => {
+    const onEdit = (id: string) => {
         router.push(`/staff/courses/${courseId}/units/${id}`);
     }
 

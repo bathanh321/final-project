@@ -18,8 +18,8 @@ interface UnitDescriptionFormProps {
     initialData: {
         description: string | null;
     },
-    courseId: number;
-    unitId: number;
+    courseId: string;
+    unitId: string;
 }
 
 export const UnitDescriptionForm = ({

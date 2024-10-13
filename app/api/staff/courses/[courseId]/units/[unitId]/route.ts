@@ -1,17 +1,17 @@
 import { auth } from "@/auth";
 import db from "@/db/drizzle";
 import { courses, units } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function DELETE(
     req: Request,
-    { params }: { params: { courseId: number; unitId: number } }
+    { params }: { params: { courseId: string; unitId: string } }
 ) {
     try {
         const session = await auth();
 
-        if(!session?.user) {
+        if (!session?.user) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
@@ -23,15 +23,23 @@ export async function DELETE(
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        const unit = await db.query.units.findFirst({
-            where: eq(units.id, params.unitId),
-        })
+        const unitExists = await db.query.units.findFirst({
+            where: and(
+                eq(units.id, params.unitId),
+                eq(units.courseId, params.courseId)
+            ),
+        });
 
-        if (!unit) {
+        if (!unitExists) {
             return new NextResponse("Unit not found", { status: 404 });
         }
 
-        const deletedUnit = await db.delete(units).where(eq(units.id, params.unitId));
+        const deletedUnit = await db.delete(units)
+            .where(and(
+                eq(units.courseId, params.courseId),
+                eq(units.id, params.unitId)
+            )
+            );
 
         return NextResponse.json(deletedUnit);
     } catch (error) {
@@ -42,7 +50,7 @@ export async function DELETE(
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { courseId: number; unitId: number } }
+    { params }: { params: { courseId: string; unitId: string } }
 ) {
     try {
         const session = await auth();

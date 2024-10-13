@@ -1,4 +1,4 @@
-import { is, relations } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import {
   timestamp,
   pgTable,
@@ -9,7 +9,6 @@ import {
   pgEnum,
   unique,
   boolean,
-  serial,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters"
 
@@ -81,7 +80,7 @@ export const passwordResetToken = pgTable("password_reset_token", {
 
 // Courses Table
 export const courses = pgTable("courses", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey(),
   title: text("title").notNull(),
   imageSrc: text("image_src"),
   isPublished: boolean("is_published").default(false),
@@ -89,19 +88,19 @@ export const courses = pgTable("courses", {
 
 // Units Table
 export const units = pgTable("units", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description"),
-  courseId: integer("course_id").references(() => courses.id, { onDelete: "cascade" }).notNull(),
+  courseId: text("course_id").references(() => courses.id, { onDelete: "cascade" }).notNull(),
   isPublished: boolean("is_published").default(false),
   order: integer("order").notNull(),
 });
 
 // Lessons Table
 export const lessons = pgTable("lessons", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey(),
   title: text("title").notNull(),
-  unitId: integer("unit_id").references(() => units.id, { onDelete: "cascade" }).notNull(),
+  unitId: text("unit_id").references(() => units.id, { onDelete: "cascade" }).notNull(),
   isPublished: boolean("is_published").default(false),
   order: integer("order").notNull(),
 });
@@ -110,8 +109,8 @@ export const lessons = pgTable("lessons", {
 export const challengesEnum = pgEnum("type", ["SELECT", "ASSIST"]);
 
 export const challenges = pgTable("challenges", {
-  id: serial("id").primaryKey(),
-  lessonId: integer("lesson_id").references(() => lessons.id, { onDelete: "cascade" }).notNull(),
+  id: text("id").primaryKey(),
+  lessonId: text("lesson_id").references(() => lessons.id, { onDelete: "cascade" }).notNull(),
   type: challengesEnum("type"),
   question: text("question"),
   difficultLevel: integer("difficult_level"),
@@ -121,8 +120,8 @@ export const challenges = pgTable("challenges", {
 
 // Challenge Options Table
 export const challengeOptions = pgTable("challenge_options", {
-  id: serial("id").primaryKey(),
-  challengeId: integer("challenge_id").references(() => challenges.id, { onDelete: "cascade" }).notNull(),
+  id: text("id").primaryKey(),
+  challengeId: text("challenge_id").references(() => challenges.id, { onDelete: "cascade" }).notNull(),
   text: text("text"),
   correct: boolean("correct").notNull().default(false),
   imageSrc: text("image_src"),
@@ -131,9 +130,9 @@ export const challengeOptions = pgTable("challenge_options", {
 
 // Challenge Progress Table
 export const challengeProgress = pgTable("challenge_progress", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey(),
   userId: text("user_id").notNull(),
-  challengeId: integer("challenge_id").references(() => challenges.id, { onDelete: "cascade" }).notNull(),
+  challengeId: text("challenge_id").references(() => challenges.id, { onDelete: "cascade" }).notNull(),
   completed: boolean("completed").notNull().default(false),
 });
 
@@ -141,14 +140,14 @@ export const challengeProgress = pgTable("challenge_progress", {
 export const userProgress = pgTable("user_progress", {
   userId: text("user_id").notNull(),
   userImageSrc: text("user_image_src").notNull().default("/mascot.svg"),
-  activeCourseId: integer("active_course_id").references(() => courses.id, { onDelete: "cascade" }),
+  activeCourseId: text("active_course_id").references(() => courses.id, { onDelete: "cascade" }),
   hearts: integer("hearts").notNull().default(5),
   points: integer("points").notNull().default(0),
 });
 
 // User Subscription Table
 export const userSubscription = pgTable("user_subscription", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey(),
   userId: text("user_id").notNull().unique().references(() => user.id, { onDelete: "cascade" }),
   stripeCustomerId: text("stripe_customer_id").notNull().unique(),
   stripeSubscriptionId: text("stripe_subscription_id").notNull().unique(),

@@ -26,43 +26,43 @@ CREATE TABLE IF NOT EXISTS "account" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "challenge_options" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"challenge_id" integer NOT NULL,
-	"text" text NOT NULL,
-	"correct" boolean NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
+	"challenge_id" text NOT NULL,
+	"text" text,
+	"correct" boolean DEFAULT false NOT NULL,
 	"image_src" text,
 	"audio_src" text
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "challenge_progress" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
-	"challenge_id" integer NOT NULL,
+	"challenge_id" text NOT NULL,
 	"completed" boolean DEFAULT false NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "challenges" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"lesson_id" integer NOT NULL,
-	"type" "type" NOT NULL,
-	"question" text NOT NULL,
-	"difficult_level" integer NOT NULL,
-	"is_published" boolean DEFAULT false NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
+	"lesson_id" text NOT NULL,
+	"type" "type",
+	"question" text,
+	"difficult_level" integer,
+	"is_published" boolean DEFAULT false,
 	"order" integer NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "courses" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
 	"image_src" text,
 	"is_published" boolean DEFAULT false
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "lessons" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
-	"unit_id" integer NOT NULL,
-	"is_published" boolean DEFAULT false NOT NULL,
+	"unit_id" text NOT NULL,
+	"is_published" boolean DEFAULT false,
 	"order" integer NOT NULL
 );
 --> statement-breakpoint
@@ -75,11 +75,11 @@ CREATE TABLE IF NOT EXISTS "password_reset_token" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "units" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
-	"description" text NOT NULL,
-	"course_id" integer NOT NULL,
-	"is_published" boolean DEFAULT false NOT NULL,
+	"description" text,
+	"course_id" text NOT NULL,
+	"is_published" boolean DEFAULT false,
 	"order" integer NOT NULL
 );
 --> statement-breakpoint
@@ -97,13 +97,13 @@ CREATE TABLE IF NOT EXISTS "user" (
 CREATE TABLE IF NOT EXISTS "user_progress" (
 	"user_id" text NOT NULL,
 	"user_image_src" text DEFAULT '/mascot.svg' NOT NULL,
-	"active_course_id" integer,
+	"active_course_id" text,
 	"hearts" integer DEFAULT 5 NOT NULL,
 	"points" integer DEFAULT 0 NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "user_subscription" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"stripe_customer_id" text NOT NULL,
 	"stripe_subscription_id" text NOT NULL,

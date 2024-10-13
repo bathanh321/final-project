@@ -17,7 +17,7 @@ interface TitleFormProps {
     initialData: {
         title: string;
     },
-    courseId: number;
+    courseId: string;
 }
 
 export const TitleForm = ({

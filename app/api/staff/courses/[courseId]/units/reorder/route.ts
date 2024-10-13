@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function PUT(
     req: Request,
-    { params }: { params: { courseId: number } }
+    { params }: { params: { courseId: string } }
 ) {
     try {
         const session = await auth();

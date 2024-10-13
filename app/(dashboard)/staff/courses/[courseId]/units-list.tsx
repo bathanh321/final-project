@@ -13,7 +13,7 @@ import { Grip, Pencil } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface Unit {
-    id: number;
+    id: string;
     title: string;
     description: string;
     isPublished: boolean;
@@ -22,8 +22,8 @@ interface Unit {
 
 interface UnitsListProps {
     items: Unit[];
-    onReorder: (updateData: { id: number, order: number }[]) => void;
-    onEdit: (id: number) => void;
+    onReorder: (updateData: { id: string, order: number }[]) => void;
+    onEdit: (id: string) => void;
 }
 
 export const UnitsList = ({

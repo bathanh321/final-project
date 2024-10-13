@@ -14,7 +14,7 @@ import { auth } from "@/auth";
 import { UnitsForm } from "./units-form";
 
 interface Unit {
-    id: number;
+    id: string;
     title: string;
     description: string;
     isPublished: boolean;
@@ -23,7 +23,7 @@ interface Unit {
 
 interface CourseIdPageProps {
     params: {
-        courseId: number;
+        courseId: string;
     }
 }
 

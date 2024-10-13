@@ -13,7 +13,7 @@ import { Grip, Pencil } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface Lesson {
-    id: number;
+    id: string;
     title: string;
     isPublished: boolean;
     order: number;
@@ -21,8 +21,8 @@ interface Lesson {
 
 interface LessonsListProps {
     items: Lesson[];
-    onReorder: (updateData: { id: number, order: number }[]) => void;
-    onEdit: (id: number) => void;
+    onReorder: (updateData: { id: string, order: number }[]) => void;
+    onEdit: (id: string) => void;
 }
 
 export const LessonsList = ({

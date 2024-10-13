@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export const DELETE = async (
     req: Request,
-    { params }: { params: { courseId: number } }
+    { params }: { params: { courseId: string } }
 ) => {
     try {
         const session = await auth()
@@ -38,7 +38,7 @@ export const DELETE = async (
 
 export const PATCH = async (
     req: Request,
-    { params }: { params: { courseId: number } }
+    { params }: { params: { courseId: string } }
 ) => {
     try {
         const session = await auth()

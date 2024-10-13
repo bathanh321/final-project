@@ -14,8 +14,8 @@ import { Actions } from "./actions";
 
 interface UnitIdPageProps {
     params: {
-        courseId: number;
-        unitId: number;
+        courseId: string;
+        unitId: string;
     };
 }
 

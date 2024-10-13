@@ -8,12 +8,13 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { LessonTitleForm } from "./lesson-title-form";
 import { ChallengesForm } from "./challenges-form";
+import { Actions } from "./actions";
 
 interface LessonIdPageProps {
     params: {
-        courseId: number;
-        unitId: number;
-        lessonId: number;
+        courseId: string;
+        unitId: string;
+        lessonId: string;
     };
 }
 
@@ -75,6 +76,7 @@ const LessonIdPage = async ({ params }: LessonIdPageProps) => {
     const totalFields = requiredFields.length;
     const completionText = `${requiredFields.filter(Boolean).length}/${totalFields}`;
 
+    const isCompleted = requiredFields.every(Boolean);
 
     return (
         <div className="p-6">
@@ -96,6 +98,13 @@ const LessonIdPage = async ({ params }: LessonIdPageProps) => {
                                 Complete all fields {completionText}
                             </span>
                         </div>
+                        <Actions
+                            disabled={!isCompleted}
+                            courseId={params.courseId}
+                            unitId={params.unitId}
+                            lessonId={params.lessonId}
+                            isPublished={lesson.isPublished}
+                        />
                     </div>
                 </div>
             </div>
@@ -104,7 +113,7 @@ const LessonIdPage = async ({ params }: LessonIdPageProps) => {
                     <div className="flex items-center gap-x-2">
                         <IconBadge icon={LayoutDashboard} />
                         <h2 className="text-xl">
-                            Customize your unit
+                            Customize your lesson
                         </h2>
                     </div>
                     <LessonTitleForm

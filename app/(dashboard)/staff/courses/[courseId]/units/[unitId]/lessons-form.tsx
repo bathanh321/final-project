@@ -17,7 +17,7 @@ import { ClimbingBoxLoader } from "react-spinners";
 import { LessonsList } from "./lessons-list";
 
 interface Lesson {
-    id: number;
+    id: string;
     title: string;
     isPublished: boolean;
     order: number;
@@ -31,7 +31,7 @@ interface LessonsFormProps {
         order: number;
         lessons: Lesson[];
     },
-    unitId: number;
+    unitId: string;
 }
 
 export const LessonsForm = ({
@@ -69,7 +69,7 @@ export const LessonsForm = ({
         }
     };
 
-    const onReorder = async (updatedData: { id: number, order: number }[]) => {
+    const onReorder = async (updatedData: { id: string, order: number }[]) => {
         try {
             setIsUpdating(true);
 
@@ -86,7 +86,7 @@ export const LessonsForm = ({
         }
     }
 
-    const onEdit = (id: number) => {
+    const onEdit = (id: string) => {
         router.push(`/staff/courses/${courseId}/units/${unitId}/lessons/${id}`);
     }
 

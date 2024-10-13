@@ -10,8 +10,8 @@ import toast from "react-hot-toast";
 
 interface ActionsProps {
     disabled: boolean;
-    courseId: number;
-    unitId: number;
+    courseId: string;
+    unitId: string;
     isPublished: boolean | null;
 }
 

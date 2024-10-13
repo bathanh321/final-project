@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1727346254776,
-      "tag": "0000_slippery_golden_guardian",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1727543310423,
-      "tag": "0001_glamorous_shiver_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1727720714151,
-      "tag": "0002_uneven_calypso",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1727894925425,
-      "tag": "0003_large_radioactive_man",
+      "when": 1728821653424,
+      "tag": "0000_cooing_shape",
       "breakpoints": true
     }
   ]

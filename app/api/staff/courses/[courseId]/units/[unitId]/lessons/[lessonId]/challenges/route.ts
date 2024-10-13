@@ -1,15 +1,15 @@
 import { auth } from "@/auth";
 import db from "@/db/drizzle";
 import { challenges, courses, lessons, units } from "@/db/schema";
+import { createId } from "@paralleldrive/cuid2";
 import { asc, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function POST(
     req: Request,
-    { params }: { params: { courseId: number; unitId: number; lessonId: number; }; },
+    { params }: { params: { courseId: string; unitId: string; lessonId: string; }; },
 ) {
     try {
-
         const session = await auth();
         const { question, type, difficultLevel } = await req.json();
 
@@ -51,6 +51,7 @@ export async function POST(
         const newOrder = lastChallenge ? lastChallenge.order + 1 : 1;
 
         const challenge = await db.insert(challenges).values({
+            id: createId(),
             question,
             type,
             difficultLevel,

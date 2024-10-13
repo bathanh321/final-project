@@ -20,7 +20,7 @@ interface ImageFormProps {
     initialData: {
         imageSrc: string | null;
     },
-    courseId: number;
+    courseId: string;
 }
 
 export const ImageForm = ({

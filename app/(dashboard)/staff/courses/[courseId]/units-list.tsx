@@ -15,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 interface Unit {
     id: string;
     title: string;
-    description: string;
+    description: string | null;
     isPublished: boolean;
     order: number;
 }

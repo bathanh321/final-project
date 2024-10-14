@@ -83,7 +83,7 @@ export const courses = pgTable("courses", {
   id: text("id").primaryKey(),
   title: text("title").notNull(),
   imageSrc: text("image_src"),
-  isPublished: boolean("is_published").default(false),
+  isPublished: boolean("is_published").default(false).notNull(),
 });
 
 // Units Table
@@ -92,7 +92,7 @@ export const units = pgTable("units", {
   title: text("title").notNull(),
   description: text("description"),
   courseId: text("course_id").references(() => courses.id, { onDelete: "cascade" }).notNull(),
-  isPublished: boolean("is_published").default(false),
+  isPublished: boolean("is_published").default(false).notNull(),
   order: integer("order").notNull(),
 });
 
@@ -101,7 +101,7 @@ export const lessons = pgTable("lessons", {
   id: text("id").primaryKey(),
   title: text("title").notNull(),
   unitId: text("unit_id").references(() => units.id, { onDelete: "cascade" }).notNull(),
-  isPublished: boolean("is_published").default(false),
+  isPublished: boolean("is_published").default(false).notNull(),
   order: integer("order").notNull(),
 });
 
@@ -114,7 +114,7 @@ export const challenges = pgTable("challenges", {
   type: challengesEnum("type"),
   question: text("question"),
   difficultLevel: integer("difficult_level"),
-  isPublished: boolean("is_published").default(false),
+  isPublished: boolean("is_published").default(false).notNull(),
   order: integer("order").notNull(),
 });
 

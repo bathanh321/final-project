@@ -8,6 +8,13 @@
       "when": 1728821653424,
       "tag": "0000_cooing_shape",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1728903108252,
+      "tag": "0001_brave_karen_page",
+      "breakpoints": true
     }
   ]
 }

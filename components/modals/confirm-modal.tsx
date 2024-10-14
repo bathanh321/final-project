@@ -14,11 +14,15 @@ import {
 
 interface ConfirmModalProps {
     children: React.ReactNode;
+    title: string;
+    content: string;
     onConfirm: () => void;
 };
 
 export const ConfirmModal = ({
     children,
+    title,
+    content,
     onConfirm
 }: ConfirmModalProps) => {
     return (
@@ -28,9 +32,9 @@ export const ConfirmModal = ({
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogTitle>{title}</AlertDialogTitle>
                     <AlertDialogDescription>
-                        This action cannot be undone.
+                        {content}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>

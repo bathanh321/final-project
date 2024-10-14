@@ -28,43 +28,17 @@ const UnitIdPage = async ({
         return redirect("/auth/login")
     }
 
-    const data = await db
-        .select({
-            id: units.id,
-            title: units.title,
-            description: units.description,
-            isPublished: units.isPublished,
-            order: units.order,
-            lessonId: lessons.id,
-            lessonTitle: lessons.title,
-            lessonIsPublished: lessons.isPublished,
-            lessonOrder: lessons.order,
-        })
-        .from(units)
-        .leftJoin(lessons, eq(units.id, lessons.unitId))
-        .where(and(
-            eq(units.id, params.unitId),
-            eq(units.courseId, params.courseId)
-        ))
-        .orderBy(asc(lessons.order))
-        .execute();
+    const unit = await db.query.units.findFirst({
+        where: eq(units.id, params.unitId),
+        with: {
+            lessons: {
+                orderBy: (lessons, { asc }) => [asc(lessons.order)]
+            }
+        }
+    })
 
-    if (!data?.length) {
-        return redirect("/");
-    }
-
-    const unit = {
-        id: data[0].id ?? 0,
-        title: data[0].title ?? "",
-        description: data[0].description ?? "",
-        isPublished: data[0].isPublished ?? false,
-        order: data[0].order ?? 0,
-        lessons: data.map(row => ({
-            id: row.lessonId ?? 0,
-            title: row.lessonTitle ?? "",
-            isPublished: row.lessonIsPublished ?? false,
-            order: row.lessonOrder ?? 0,
-        }))
+    if (!unit) {
+        return redirect("/auth/login");
     }
 
     const requiredFields = [

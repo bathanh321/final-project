@@ -25,7 +25,7 @@ export const Sidebar = ({ className }: Props) => {
             className
         )}>
             <div>
-                <Link href={isAdmin ? "/admin" : isStaff ? "/staff" : "/user"}>
+                <Link href={isAdmin ? "/admin" : isStaff ? "/staff/courses" : "/user"}>
                     <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
                         <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
                         <h1 className="text-2xl font-extrabold text-purple-600 tracking-wide">

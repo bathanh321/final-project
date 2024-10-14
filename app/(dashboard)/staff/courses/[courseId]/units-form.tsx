@@ -15,22 +15,10 @@ import { CourseSchemaTitle, CourseSchemaUnits } from "@/schemas";
 import { cn } from "@/lib/utils";
 import { UnitsList } from "./units-list";
 import { ClimbingBoxLoader } from "react-spinners";
-
-interface Unit {
-    id: string;
-    title: string;
-    description: string;
-    isPublished: boolean;
-    order: number;
-}
+import { courses, units } from "@/db/schema";
 
 interface UnitsFormProps {
-    initialData: {
-        title: string;
-        imageSrc: string | null;
-        isPublished: boolean | null;
-        units: Unit[];
-    },
+    initialData: typeof courses.$inferSelect & { units: typeof units.$inferSelect[] };
     courseId: string;
 }
 
@@ -142,14 +130,13 @@ export const UnitsForm = ({
             {!isCreating && (
                 <div className={cn(
                     "text-sm mt-2",
-                    !initialData.units?.length && "text-slate-500 italic"
+                    !Array.isArray(initialData.units) || !initialData.units.length && "text-slate-500 italic"
                 )}>
-                    {!initialData.units?.length ? "No units" : (
-
+                    {!Array.isArray(initialData.units) || !initialData.units.length ? "No units" : (
                         <UnitsList
                             onEdit={onEdit}
                             onReorder={onReorder}
-                            items={initialData.units || []}
+                            items={initialData.units}
                         />
                     )}
                 </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import { ConfirmModal } from "@/components/modals/confirm-modal";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,8 @@ interface ActionsProps {
     disabled: boolean;
     courseId: string;
     unitId: string;
+    lessonId: string;
+    challengeId: string;
     isPublished: boolean | null;
 }
 
@@ -19,7 +21,9 @@ export const Actions = ({
     disabled,
     courseId,
     unitId,
-    isPublished
+    lessonId,
+    challengeId,
+    isPublished,
 }: ActionsProps) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
@@ -28,12 +32,12 @@ export const Actions = ({
         try {
             setIsLoading(true);
 
-            if(isPublished) {
-                await axios.patch(`/api/staff/courses/${courseId}/units/${unitId}/unpublish`);
-                toast.success("Unit unpublished");
+            if (isPublished) {
+                await axios.patch(`/api/staff/courses/${courseId}/units/${unitId}/lessons/${lessonId}/challenges/${challengeId}/unpublish`);
+                toast.success("Challenge unpublished");
             } else {
-                await axios.patch(`/api/staff/courses/${courseId}/units/${unitId}/publish`);
-                toast.success("Unit published");
+                await axios.patch(`/api/staff/courses/${courseId}/units/${unitId}/lessons/${lessonId}/challenges/${challengeId}/publish`);
+                toast.success("Challenge published");
             }
 
             router.refresh();
@@ -48,10 +52,10 @@ export const Actions = ({
         try {
             setIsLoading(true);
 
-            await axios.delete(`/api/staff/courses/${courseId}/units/${unitId}`);
+            await axios.delete(`/api/staff/courses/${courseId}/units/${unitId}/lessons/${lessonId}/challenges/${challengeId}`);
 
-            toast.success("Unit deleted successfully");
-            router.push(`/staff/courses/${courseId}`);
+            toast.success("Challenge deleted successfully");
+            router.push(`/staff/courses/${courseId}/units/${unitId}/lessons/${lessonId}`);
         } catch {
             toast.error("Something went wrong");
         } finally {
@@ -68,9 +72,9 @@ export const Actions = ({
             >
                 {isPublished ? "Unpublish" : "Publish"}
             </Button>
-            <ConfirmModal onConfirm={onDelete} title="Are you sure to delete this unit?" content="This action can't be undone">
+            <ConfirmModal onConfirm={onDelete} title="Are you sure to delete this challenge?" content="This action can't be undone">
                 <Button size="sm" disabled={isLoading}>
-                    <Trash className="h-4 w-4" />
+                    <Trash className="size-4"/>
                 </Button>
             </ConfirmModal>
         </div>

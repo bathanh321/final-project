@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { IconBadge } from "@/components/icon-badge";
 import db from "@/db/drizzle";
 import { challengeOptions, challenges } from "@/db/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, not } from "drizzle-orm";
 import { ArrowLeft, LayoutDashboard, ListChecks } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -10,6 +10,7 @@ import { ChallengeTypeForm } from "./challenge-type-form";
 import { ChallengeQuestionForm } from "./challenge-question-form";
 import { ChallengeDifficultLevelForm } from "./challenge-difficult-level-form";
 import { ChallengeOptionsForm } from "./challenge-options-form";
+import { Actions } from "./actions";
 
 interface ChallengeIdPageProps {
     params: {
@@ -71,16 +72,18 @@ const ChallengeIdPage = async ({ params }: ChallengeIdPageProps) => {
         }))
     }
 
+    const hasCorrectOption = challenge.challengeOptions.some(option => option.correct);
+
     const requiredFields = [
         challenge.type,
         challenge.question,
         challenge.difficultLevel,
-        challenge.challengeOptions.length >= 2
+        challenge.challengeOptions.length >= 2,
+        hasCorrectOption
     ]
 
     const totalFields = requiredFields.length;
     const completionText = `${requiredFields.filter(Boolean).length}/${totalFields}`;
-
 
     return (
         <div className="p-6">
@@ -102,6 +105,14 @@ const ChallengeIdPage = async ({ params }: ChallengeIdPageProps) => {
                                 Complete all fields {completionText}
                             </span>
                         </div>
+                        <Actions
+                            disabled={!requiredFields.every(Boolean)}
+                            courseId={params.courseId}
+                            unitId={params.unitId}
+                            lessonId={params.lessonId}
+                            challengeId={params.challengeId}
+                            isPublished={challenge.isPublished}
+                        />
                     </div>
                 </div>
             </div>

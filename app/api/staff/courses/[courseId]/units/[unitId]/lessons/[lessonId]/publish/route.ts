@@ -6,7 +6,13 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { courseId: string; unitId: string; lessonId: string } }
+    { params }: {
+        params: {
+            courseId: string;
+            unitId: string;
+            lessonId: string
+        }
+    }
 ) {
     try {
         const session = await auth();
@@ -25,6 +31,17 @@ export async function PATCH(
 
         if (!courseOwner) {
             return new NextResponse("Course not found", { status: 400 });
+        }
+
+        const unitExists = await db.query.units.findFirst({
+            where: and(
+                eq(units.id, params.unitId),
+                eq(units.courseId, params.courseId)
+            ),
+        });
+
+        if (!unitExists) {
+            return new NextResponse("Unit not found", { status: 400 });
         }
 
         const data = await db
@@ -71,12 +88,13 @@ export async function PATCH(
         }
 
         const publishedLesson = await db.update(lessons)
-        .set({ isPublished: true })
-        .where(and(
-            eq(courses.id, params.courseId),
-            eq(lessons.id, params.lessonId),
-            eq(lessons.unitId, params.unitId)
-        ));
+            .set({ isPublished: true })
+            .where(and(
+                eq(lessons.id, params.lessonId),
+                eq(lessons.unitId, params.unitId)
+            ));
+
+        return NextResponse.json(publishedLesson);
     } catch (error) {
         console.log("[LESSON_ID_PUBLISH]", error);
         return new NextResponse("Internal server error", { status: 500 });

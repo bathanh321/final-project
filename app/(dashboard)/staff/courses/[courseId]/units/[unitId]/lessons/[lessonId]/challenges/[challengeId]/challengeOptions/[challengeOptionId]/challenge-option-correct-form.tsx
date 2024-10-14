@@ -97,7 +97,7 @@ export const ChallengeOptionCorrectForm = ({
                             control={form.control}
                             name="correct"
                             render={({ field }) => (
-                                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-3">
                                     <FormControl>
                                         <Checkbox
                                             checked={field.value}

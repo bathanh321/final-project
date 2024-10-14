@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import db from "@/db/drizzle";
-import { courses, lessons } from "@/db/schema";
+import { courses, lessons, units } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
@@ -10,7 +10,6 @@ export async function PATCH(
 ) {
     try {
         const session = await auth();
-        const { isPublished, ...values } = await req.json();
 
         if (!session?.user) {
             return new NextResponse("Unauthorized", { status: 401 });
@@ -25,7 +24,10 @@ export async function PATCH(
         }
 
         const unit = await db.query.units.findFirst({
-            where: (units, { eq }) => eq(units.id, params.unitId)
+            where: and(
+                eq(units.id, params.unitId),
+                eq(units.courseId, params.courseId)
+            ),
         })
 
         if (!unit) {
@@ -34,20 +36,22 @@ export async function PATCH(
 
 
         const lesson = await db.query.lessons.findFirst({
-            where: eq(lessons.id, params.lessonId),
+            where: and(
+                eq(lessons.id, params.lessonId),
+                eq(lessons.unitId, params.unitId),
+            ),
         })
 
         if (!lesson) {
             return new NextResponse("Lesson not found", { status: 404 });
         }
 
-        const unPublishedLesson = await db.update(lessons).set(values)
+        const unPublishedLesson = await db.update(lessons)
+            .set({ isPublished: false })
             .where(and(
-                eq(courses.id, params.courseId),
-                eq(lessons.unitId, params.unitId),
-                eq(lessons.id, params.lessonId)
+                eq(lessons.id, params.lessonId),
+                eq(lessons.unitId, params.unitId)
             ))
-            .returning();
 
         return NextResponse.json(unPublishedLesson);
     } catch (error) {

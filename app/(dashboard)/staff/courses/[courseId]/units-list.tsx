@@ -11,6 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Grip, Pencil } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { units } from "@/db/schema";
 
 interface Unit {
     id: string;
@@ -21,7 +22,7 @@ interface Unit {
 }
 
 interface UnitsListProps {
-    items: Unit[];
+    items: typeof units.$inferSelect[];
     onReorder: (updateData: { id: string, order: number }[]) => void;
     onEdit: (id: string) => void;
 }

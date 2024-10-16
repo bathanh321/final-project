@@ -8,16 +8,16 @@ import { SidebarItem } from "./sidebar-item";
 import { UserButton } from "./auth/user-button";
 import { usePathname } from "next/navigation";
 
-type Props = {
+interface SidebarProps {
     className?: string;
 }
 
-export const Sidebar = ({ className }: Props) => {
+export const Sidebar = ({ className }: SidebarProps) => {
     const pathname = usePathname();
 
     const isAdmin = pathname.startsWith("/admin");
     const isStaff = pathname.startsWith("/staff");
-    const isUser = pathname.startsWith("/user");
+    const isUser = pathname.startsWith("/");
 
     return (
         <div className={cn(
@@ -28,7 +28,7 @@ export const Sidebar = ({ className }: Props) => {
                 <Link href={isAdmin ? "/admin" : isStaff ? "/staff/courses" : "/user"}>
                     <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
                         <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
-                        <h1 className="text-2xl font-extrabold text-purple-600 tracking-wide">
+                        <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
                             Sololingo
                         </h1>
                     </div>
@@ -67,19 +67,23 @@ export const Sidebar = ({ className }: Props) => {
                     ) : (
                         <>
                             <SidebarItem
-                                label="course"
-                                href="/admin"
+                                iconSrc={"/learn.svg"}
+                                label="Khoá học"
+                                href="/learn"
                             />
                             <SidebarItem
-                                label="Leaderboard"
+                                iconSrc={"/leaderboard.svg"}
+                                label="Bảng xếp hạng"
                                 href="/leaderboard"
                             />
                             <SidebarItem
-                                label="Quests"
+                                iconSrc={"/quests.svg"}
+                                label="Nhiệm vụ"
                                 href="/quests"
                             />
                             <SidebarItem
-                                label="Shop"
+                                iconSrc={"/shop.svg"}
+                                label="Cửa hàng"
                                 href="/shop"
                             />
                         </>

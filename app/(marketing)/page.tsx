@@ -25,26 +25,26 @@ export default function Home() {
       </div>
       <div className="flex flex-col items-center gap-y-8">
         <h1 className="text-xl lg:text-3xl font-bold text-neutral-600 max-w-[480px] text-center">
-          Learn, practice and master new language with Lingo.
+          Học, rèn luyện và làm chủ ngôn ngữ mới cùng Sololingo.
         </h1>
         <div className="flex flex-col items-center gap-y-3 max-w-[330px] w-full">
           {!user ? (
             <>
               <Link href="/auth/register">
                 <Button size="lg" variant="secondary">
-                  Get Started
+                  Bắt đầu thôi!
                 </Button>
               </Link>
               <Link href="/auth/login">
                 <Button size="lg" variant="primaryOutline">
-                  I already have an account
+                  Tôi đã có tài khoản
                 </Button>
               </Link>
             </>
           ) : (
             <Link href="/learn">
               <Button size="lg" variant="secondary" className="w-full">
-                Continue Learning
+                Tiếp tục học
               </Button>
             </Link>
           )}

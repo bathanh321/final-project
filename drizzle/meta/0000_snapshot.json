@@ -1,5 +1,5 @@
 {
-  "id": "c7acf14f-07c5-4ef8-8045-4ffec6db8944",
+  "id": "71c63c75-5936-48ca-ad88-a7c8bc4480e9",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -195,6 +195,19 @@
       },
       "indexes": {},
       "foreignKeys": {
+        "challenge_progress_user_id_user_id_fk": {
+          "name": "challenge_progress_user_id_user_id_fk",
+          "tableFrom": "challenge_progress",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
         "challenge_progress_challenge_id_challenges_id_fk": {
           "name": "challenge_progress_challenge_id_challenges_id_fk",
           "tableFrom": "challenge_progress",
@@ -210,7 +223,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "challenge_progress_user_id_unique": {
+          "name": "challenge_progress_user_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_id"
+          ]
+        }
+      }
     },
     "public.challenges": {
       "name": "challenges",
@@ -233,13 +254,14 @@
           "type": "type",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'SELECT'"
         },
         "question": {
           "name": "question",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "difficult_level": {
           "name": "difficult_level",
@@ -251,7 +273,7 @@
           "name": "is_published",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": false
         },
         "order": {
@@ -306,7 +328,7 @@
           "name": "is_published",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": false
         }
       },
@@ -341,7 +363,7 @@
           "name": "is_published",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": false
         },
         "order": {
@@ -466,7 +488,7 @@
           "name": "is_published",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": false
         },
         "order": {
@@ -564,8 +586,15 @@
         "user_id": {
           "name": "user_id",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
+        },
+        "user_name": {
+          "name": "user_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'User'"
         },
         "user_image_src": {
           "name": "user_image_src",

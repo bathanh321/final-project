@@ -28,48 +28,20 @@ const ChallengeIdPage = async ({ params }: ChallengeIdPageProps) => {
         return redirect("/auth/login")
     }
 
-    const data = await db
-        .select({
-            id: challenges.id,
-            type: challenges.type,
-            question: challenges.question,
-            difficultLevel: challenges.difficultLevel,
-            isPublished: challenges.isPublished,
-            order: challenges.order,
-            challengeOptionId: challengeOptions.id,
-            challengeOptionText: challengeOptions.text,
-            challengeOptionCorrect: challengeOptions.correct,
-            challengeOptionsImageSrc: challengeOptions.imageSrc,
-            challengeOptionsAudioSrc: challengeOptions.audioSrc,
-        })
-        .from(challenges)
-        .leftJoin(challengeOptions, eq(challenges.id, challengeOptions.challengeId))
-        .where(and(
+    const challenge = await db.query.challenges.findFirst({
+        where: and(
             eq(challenges.id, params.challengeId),
-            eq(challenges.lessonId, params.lessonId)
-        ))
-        .execute();
+            eq(challenges.lessonId, params.lessonId),
+        ),
+        with: {
+            challengeOptions: {
+                orderBy: (challengeOptions, { asc }) => [asc(challengeOptions.correct)]
+            }
+        }
+    })
 
-    if (data.length === 0) {
-        return (
-            <div>Challenge not found</div>
-        )
-    }
-
-    const challenge = {
-        id: data[0].id ?? 0,
-        type: data[0].type ?? "SELECT",
-        question: data[0].question ?? "",
-        difficultLevel: data[0].difficultLevel ?? 0,
-        isPublished: data[0].isPublished ?? false,
-        order: data[0].order ?? 0,
-        challengeOptions: data.map(row => ({
-            id: row.challengeOptionId ?? 0,
-            text: row.challengeOptionText ?? "",
-            correct: row.challengeOptionCorrect ?? "",
-            imageSrc: row.challengeOptionsImageSrc ?? "",
-            audioSrc: row.challengeOptionsAudioSrc ?? "",
-        }))
+    if (!challenge) {
+        return redirect("/auth/login");
     }
 
     const hasCorrectOption = challenge.challengeOptions.some(option => option.correct);

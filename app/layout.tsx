@@ -4,6 +4,9 @@ import db from "@/db/drizzle";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { ToastProvider } from "@/components/providers/toaster-provider";
+import { ExitModal } from "@/components/modals/exit-modal";
+import { HeartsModal } from "@/components/modals/hearts-modal";
+import { PracticeModal } from "@/components/modals/practice-modal";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,7 +26,10 @@ export default async function RootLayout({
         <body
           className={`antialiased`}
         >
-          <ToastProvider/>
+          <ToastProvider />
+          <ExitModal />
+          <HeartsModal />
+          <PracticeModal />
           {children}
         </body>
       </html>

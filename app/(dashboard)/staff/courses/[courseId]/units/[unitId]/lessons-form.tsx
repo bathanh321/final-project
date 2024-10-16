@@ -15,22 +15,10 @@ import { LessonSchemaTitle, UnitSchemaLesson } from "@/schemas";
 import { cn } from "@/lib/utils";
 import { ClimbingBoxLoader } from "react-spinners";
 import { LessonsList } from "./lessons-list";
-
-interface Lesson {
-    id: string;
-    title: string;
-    isPublished: boolean;
-    order: number;
-}
+import { units } from "@/db/schema";
 
 interface LessonsFormProps {
-    initialData: {
-        title: string;
-        description: string;
-        isPublished: boolean;
-        order: number;
-        lessons: Lesson[];
-    },
+    initialData: typeof units.$inferSelect & { lessons: typeof units.$inferSelect[] },
     unitId: string;
 }
 
@@ -146,7 +134,7 @@ export const LessonsForm = ({
                     "text-sm mt-2",
                     !initialData.lessons?.length && "text-slate-500 italic"
                 )}>
-                    {!initialData.lessons?.length || initialData.lessons[0].id === 0 ? "No lessons" : (
+                    {!initialData.lessons?.length ? "No lessons" : (
 
                         <LessonsList
                             onEdit={onEdit}

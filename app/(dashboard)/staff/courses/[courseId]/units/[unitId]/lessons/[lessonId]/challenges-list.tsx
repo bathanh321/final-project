@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -13,7 +14,7 @@ interface Challenge {
 }
 
 interface ChallengesListProps {
-    items: Challenge[];
+    items: typeof challenges.$inferSelect[];
     onEdit: (id: string) => void;
 }
 

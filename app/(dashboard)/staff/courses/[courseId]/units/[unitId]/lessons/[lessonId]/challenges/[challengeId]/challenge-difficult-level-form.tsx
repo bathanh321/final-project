@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 
 interface ChallengeDifficultLevelFormProps {
     initialData: {
-        difficultLevel: number;
+        difficultLevel: number | null;
     },
     courseId: string;
     unitId: string;
@@ -72,7 +72,7 @@ export const ChallengeDifficultLevelForm = ({
             {!isEditing && (
                 <>
                     <p className="text-sm mt-2">
-                        {initialData.difficultLevel === 0 ? "Not set" : initialData.difficultLevel}
+                        {!initialData.difficultLevel ? "Not set" : initialData.difficultLevel}
                     </p>
                 </>
             )}

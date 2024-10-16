@@ -14,6 +14,7 @@ import { PlusCircle } from "lucide-react";
 import { ChallengeSchemaQuestion } from "@/schemas";
 import { cn } from "@/lib/utils";
 import { ChallengesList } from "./challenges-list";
+import { lessons } from "@/db/schema";
 
 interface Challenge {
     id: string;
@@ -25,12 +26,7 @@ interface Challenge {
 }
 
 interface ChallengesFormProps {
-    initialData: {
-        title: string;
-        isPublished: boolean;
-        order: number;
-        challenges: Challenge[];
-    },
+    initialData: typeof lessons.$inferSelect & { challenges: typeof lessons.$inferSelect[] },
     lessonId: string;
 }
 
@@ -126,7 +122,7 @@ export const ChallengesForm = ({
                     {!initialData.challenges?.length && "No challenges"}
                         <ChallengesList
                             onEdit={onEdit}
-                            items={initialData.challenges || []}
+                            items={initialData.challenges}
                         />
                     
                 </div>

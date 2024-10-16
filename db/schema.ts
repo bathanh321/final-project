@@ -111,8 +111,8 @@ export const challengesEnum = pgEnum("type", ["SELECT", "ASSIST"]);
 export const challenges = pgTable("challenges", {
   id: text("id").primaryKey(),
   lessonId: text("lesson_id").references(() => lessons.id, { onDelete: "cascade" }).notNull(),
-  type: challengesEnum("type"),
-  question: text("question"),
+  type: challengesEnum("type").default("SELECT").notNull(),
+  question: text("question").notNull(),
   difficultLevel: integer("difficult_level"),
   isPublished: boolean("is_published").default(false).notNull(),
   order: integer("order").notNull(),
@@ -131,14 +131,15 @@ export const challengeOptions = pgTable("challenge_options", {
 // Challenge Progress Table
 export const challengeProgress = pgTable("challenge_progress", {
   id: text("id").primaryKey(),
-  userId: text("user_id").notNull(),
+  userId: text("user_id").notNull().unique().references(() => user.id, { onDelete: "cascade" }),
   challengeId: text("challenge_id").references(() => challenges.id, { onDelete: "cascade" }).notNull(),
   completed: boolean("completed").notNull().default(false),
 });
 
 // User Progress Table
 export const userProgress = pgTable("user_progress", {
-  userId: text("user_id").notNull(),
+  userId: text("user_id").primaryKey(),
+  userName: text("user_name").notNull().default("User"),
   userImageSrc: text("user_image_src").notNull().default("/mascot.svg"),
   activeCourseId: text("active_course_id").references(() => courses.id, { onDelete: "cascade" }),
   hearts: integer("hearts").notNull().default(5),
@@ -157,8 +158,9 @@ export const userSubscription = pgTable("user_subscription", {
 
 // Relations
 export const userRelations = relations(user, ({ many }) => ({
-  accounts: many(account),
+  users: many(user),
   userProgress: many(userProgress),
+  challengeProgress: many(challengeProgress),
   userSubscriptions: many(userSubscription),
 }));
 
@@ -222,4 +224,8 @@ export const challengeProgressRelations = relations(challengeProgress, ({ one })
     fields: [challengeProgress.challengeId],
     references: [challenges.id]
   }),
+  user: one(user, {
+    fields: [challengeProgress.userId],
+    references: [user.id]
+  })
 }));

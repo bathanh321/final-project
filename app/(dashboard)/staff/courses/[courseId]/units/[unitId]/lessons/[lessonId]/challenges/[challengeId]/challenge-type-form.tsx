@@ -78,7 +78,7 @@ export const ChallengeTypeForm = ({
             {!isEditing && (
                 <>
                     <p className="text-sm mt-2">
-                        {initialData.type}
+                        {initialData.type ? initialData.type : "Choose a type"}
                     </p>
                 </>
             )}

@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
+import { challengeOptions } from "@/db/schema";
 
 interface ChallengeOption {
     id: string;
@@ -12,7 +13,7 @@ interface ChallengeOption {
 }
 
 interface ChallengeOptionsListProps {
-    items: ChallengeOption[];
+    items: typeof challengeOptions.$inferSelect[];
     onEdit: (id: string) => void;
 }
 

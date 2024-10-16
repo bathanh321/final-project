@@ -38,16 +38,17 @@ CREATE TABLE IF NOT EXISTS "challenge_progress" (
 	"id" text PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"challenge_id" text NOT NULL,
-	"completed" boolean DEFAULT false NOT NULL
+	"completed" boolean DEFAULT false NOT NULL,
+	CONSTRAINT "challenge_progress_user_id_unique" UNIQUE("user_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "challenges" (
 	"id" text PRIMARY KEY NOT NULL,
 	"lesson_id" text NOT NULL,
-	"type" "type",
-	"question" text,
+	"type" "type" DEFAULT 'SELECT' NOT NULL,
+	"question" text NOT NULL,
 	"difficult_level" integer,
-	"is_published" boolean DEFAULT false,
+	"is_published" boolean DEFAULT false NOT NULL,
 	"order" integer NOT NULL
 );
 --> statement-breakpoint
@@ -55,14 +56,14 @@ CREATE TABLE IF NOT EXISTS "courses" (
 	"id" text PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
 	"image_src" text,
-	"is_published" boolean DEFAULT false
+	"is_published" boolean DEFAULT false NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "lessons" (
 	"id" text PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
 	"unit_id" text NOT NULL,
-	"is_published" boolean DEFAULT false,
+	"is_published" boolean DEFAULT false NOT NULL,
 	"order" integer NOT NULL
 );
 --> statement-breakpoint
@@ -79,7 +80,7 @@ CREATE TABLE IF NOT EXISTS "units" (
 	"title" text NOT NULL,
 	"description" text,
 	"course_id" text NOT NULL,
-	"is_published" boolean DEFAULT false,
+	"is_published" boolean DEFAULT false NOT NULL,
 	"order" integer NOT NULL
 );
 --> statement-breakpoint
@@ -95,7 +96,8 @@ CREATE TABLE IF NOT EXISTS "user" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "user_progress" (
-	"user_id" text NOT NULL,
+	"user_id" text PRIMARY KEY NOT NULL,
+	"user_name" text DEFAULT 'User' NOT NULL,
 	"user_image_src" text DEFAULT '/mascot.svg' NOT NULL,
 	"active_course_id" text,
 	"hearts" integer DEFAULT 5 NOT NULL,
@@ -130,6 +132,12 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "challenge_options" ADD CONSTRAINT "challenge_options_challenge_id_challenges_id_fk" FOREIGN KEY ("challenge_id") REFERENCES "public"."challenges"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "challenge_progress" ADD CONSTRAINT "challenge_progress_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

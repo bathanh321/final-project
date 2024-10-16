@@ -11,36 +11,27 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { PlusCircle } from "lucide-react";
-import { ChallengeSchemaChallengeOption, ChallengeSchemaQuestion } from "@/schemas";
+import { ChallengeSchemaChallengeOption } from "@/schemas";
 import { cn } from "@/lib/utils";
 import { ChallengeOptionsList } from "./challenge-options-list";
-
-interface ChallengeOption {
-    id: string;
-    text: string;
-    correct: boolean;
-    imageSrc: string;
-    audioSrc: string;
-}
+import { challengeOptions, challenges } from "@/db/schema";
 
 interface ChallengeOptionsFormProps {
-    initialData: {
-        type: "SELECT" | "ASSIST";
-        question: string;
-        difficultLevel: number;
-        isPublished: boolean;
-        challengeOptions: ChallengeOption[];
-    },
+    initialData: typeof challenges.$inferSelect & { challengeOptions: typeof challengeOptions.$inferSelect[] },
+    courseId: string;
+    unitId: string;
+    lessonId: string;
     challengeId: string;
 }
 
 export const ChallengeOptionsForm = ({
     initialData,
+    courseId,
+    unitId,
+    lessonId,
     challengeId
 }: ChallengeOptionsFormProps) => {
     const router = useRouter();
-    const params = useParams();
-    const courseId = params.courseId;
     const [isCreating, setIsCreating] = useState(false);
 
     const toggleCreating = () => {
@@ -58,7 +49,7 @@ export const ChallengeOptionsForm = ({
 
     const onSubmit = async (values: z.infer<typeof ChallengeSchemaChallengeOption>) => {
         try {
-            await axios.post(`/api/staff/courses/${courseId}/units/${params.unitId}/lessons/${params.lessonId}/challenges/${challengeId}/challengeOptions`, values);
+            await axios.post(`/api/staff/courses/${courseId}/units/${unitId}/lessons/${lessonId}/challenges/${challengeId}/challengeOptions`, values);
             toast.success("Challenge option created");
             toggleCreating();
             router.refresh();
@@ -69,7 +60,7 @@ export const ChallengeOptionsForm = ({
     };
 
     const onEdit = (id: string) => {
-        router.push(`/staff/courses/${courseId}/units/${params.unitId}/lessons/${params.lessonId}/challenges/${params.challengeId}/challengeOptions/${id}`);
+        router.push(`/staff/courses/${courseId}/units/${unitId}/lessons/${lessonId}/challenges/${challengeId}/challengeOptions/${id}`);
     }
 
     return (

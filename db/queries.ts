@@ -1,7 +1,7 @@
 import { cache } from "react"
 import db from "./drizzle"
 import { and, eq } from "drizzle-orm";
-import { challengeProgress, challenges, courses, lessons, units, userProgress } from "./schema";
+import { challengeProgress, challenges, courses, lessons, units, userProgress, userSubscription } from "./schema";
 import { auth } from "@/auth";
 
 export const getUserProgress = cache(async () => {
@@ -41,6 +41,7 @@ export const getUnits = cache(async () => {
                 where: eq(lessons.isPublished, true),
                 with: {
                     challenges: {
+                        where: eq(challenges.isPublished, true),
                         orderBy: (challenges, { asc }) => [asc(challenges.order)],
                         with: {
                             challengeProgress: {
@@ -83,12 +84,17 @@ export const getCourses = cache(async () => {
 
 export const getCourseById = cache(async (courseId: string) => {
     const data = await db.query.courses.findFirst({
-        where: eq(courses.id, courseId),
+        where: and(
+            eq(courses.id, courseId),
+            eq(courses.isPublished, true)
+        ),
         with: {
             units: {
+                where: eq(units.isPublished, true),
                 orderBy: (units, { asc }) => [asc(units.order)],
                 with: {
                     lessons: {
+                        where: eq(lessons.isPublished, true),
                         orderBy: (lessons, {asc}) => [asc(lessons.order)],
                     }
                 }
@@ -245,4 +251,54 @@ export const getLessonPercentage = cache(async () => {
     );
 
     return percentage;
+})
+
+const DAY_IN_MS = 86_400_000;
+
+export const getUserSubscription = cache(async () => {
+    const session = await auth();
+
+    if (!session?.user.id) {
+        return null;
+    }
+
+    const userId = session.user.id;
+
+    const data = await db.query.userSubscription.findFirst({
+        where: eq(userSubscription.userId, userId),
+    });
+
+    if(!data) {
+        return null;
+    }
+
+    const isActive = 
+    data.stripePriceId && 
+    data.stripeCurrentPeriodEnd?.getTime()! + DAY_IN_MS > Date.now();
+
+    return {
+        ...data,
+        isActive: !!isActive,
+    }
+})
+
+export const getTopTenUsers = cache(async () => {
+    const session = await auth();
+
+    if (!session?.user.id) {
+        return [];
+    }
+
+    const data = await db.query.userProgress.findMany({
+        orderBy: (userProgress, {desc}) => [desc(userProgress.points)],
+        limit: 10,
+        columns: {
+            userId: true,
+            userName: true,
+            userImageSrc: true,
+            points: true,
+        },
+    });
+
+    return data;
 })

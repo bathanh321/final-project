@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader, User } from "lucide-react";
+import { Loader, User, UserIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
     DropdownMenu,
@@ -54,9 +54,15 @@ export const UserButton = () => {
                 <LogoutButton>
                     <DropdownMenuItem>
                         <ExitIcon className="size-4 mr-2" />
-                        Log out
+                        Đăng xuất
                     </DropdownMenuItem>
                 </LogoutButton>
+                <Link href="/profile">
+                <DropdownMenuItem>
+                    <UserIcon className="size-4 mr-2" />
+                    Profile
+                </DropdownMenuItem>
+                </Link>
             </DropdownMenuContent>
         </DropdownMenu>
     )

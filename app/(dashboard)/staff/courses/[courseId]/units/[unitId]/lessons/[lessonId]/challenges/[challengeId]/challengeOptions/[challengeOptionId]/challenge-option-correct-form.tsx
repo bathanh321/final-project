@@ -80,7 +80,7 @@ export const ChallengeOptionCorrectForm = ({
                         !initialData.correct && "text-slate-500 italic"
                     )}>
                         {initialData.correct ? (
-                            <>This chapter is correct</>
+                            <>This option is correct</>
                         ) : (
                             <>This option is incorrect</>
                         )}

@@ -86,6 +86,11 @@ export const Sidebar = ({ className }: SidebarProps) => {
                                 label="Cửa hàng"
                                 href="/shop"
                             />
+                            <SidebarItem
+                                iconSrc={"/profile.png"}
+                                label="Hồ sơ"
+                                href="/profile"
+                            />
                         </>
                     )
                     }

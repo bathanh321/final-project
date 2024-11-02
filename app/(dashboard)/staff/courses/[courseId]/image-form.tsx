@@ -2,17 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { ImageIcon, Pencil, PlusCircle } from "lucide-react";
 import { CourseSchemaImage } from "@/schemas";
-import { courses } from "@/db/schema";
 import Image from "next/image";
 import { FileUpload } from "@/components/file-upload";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader, User, UserIcon } from "lucide-react";
+import { FileText, KeyRound, Loader, User, UserIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
     DropdownMenu,
@@ -27,6 +27,9 @@ export const UserButton = () => {
         );
     }
 
+    const isAdminPage = location.pathname.includes("/admin");
+    const isStaffPage = location.pathname.includes("/staff");
+
     if (!user) {
         return (
             <div className="flex space-x-2">
@@ -46,7 +49,7 @@ export const UserButton = () => {
                 <Avatar>
                     <AvatarImage src={user?.image || ""} />
                     <AvatarFallback className="bg-sky-500">
-                    {avatarFallback}
+                        {avatarFallback}
                     </AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
@@ -58,11 +61,27 @@ export const UserButton = () => {
                     </DropdownMenuItem>
                 </LogoutButton>
                 <Link href="/profile">
-                <DropdownMenuItem>
-                    <UserIcon className="size-4 mr-2" />
-                    Profile
-                </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <UserIcon className="size-4 mr-2" />
+                        Profile
+                    </DropdownMenuItem>
                 </Link>
+                {(user.role === "ADMIN" && !isAdminPage) && (
+                    <Link href="/admin/users">
+                        <DropdownMenuItem>
+                            <KeyRound className="size-4 mr-2" />
+                            Go to Admin Mode
+                        </DropdownMenuItem>
+                    </Link>
+                )}
+                {((user.role === "ADMIN" || user.role === "STAFF") && !isStaffPage) && (
+                    <Link href="/staff/courses">
+                        <DropdownMenuItem>
+                            <FileText className="size-4 mr-2" />
+                            Go to Staff Mode
+                        </DropdownMenuItem>
+                    </Link>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     )

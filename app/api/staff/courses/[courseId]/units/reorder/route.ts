@@ -14,6 +14,10 @@ export async function PUT(
         if (!session?.user) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
+        
+        if (session?.user?.role !== "ADMIN" && session?.user?.role !== "STAFF") {
+            return new NextResponse("Unauthorized", { status: 401 });
+        }
 
         const { list } = await req.json();     
         

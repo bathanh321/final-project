@@ -9,13 +9,11 @@ import { UserProgress } from "@/components/user-progress";
 import { getUserById } from "@/data/user";
 import { getTopTenUsers, getUserProgress, getUserSubscription } from "@/db/queries";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { format } from "date-fns";
 import Image from "next/image";
 import { InfinityIcon, Pencil } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Statistic } from "./statistic";
-import { useState } from "react";
 
 const ProfilePage = async () => {
     const session = await auth();
@@ -34,11 +32,11 @@ const ProfilePage = async () => {
     }
 
     const [
-        userProgress, 
+        userProgress,
         userSubsciprtion,
         leaderboard
     ] = await Promise.all([
-        userProgressData, 
+        userProgressData,
         userSubsciprtionData,
         leaderboarData
     ]);
@@ -50,6 +48,10 @@ const ProfilePage = async () => {
     const avatarFallback = user.name?.charAt(0).toUpperCase();
 
     const isPro = !!userSubsciprtion?.isActive;
+
+    const dueDate = userSubsciprtion?.stripeCurrentPeriodEnd;
+
+    const formattedDueDate = dueDate ? format(new Date(dueDate), "dd/MM/yyyy") : "";
 
     const isInTopTen = leaderboard.some((leader) => leader.userId === user.id);
 
@@ -75,9 +77,6 @@ const ProfilePage = async () => {
                                 <AvatarFallback className="bg-sky-500 text-3xl">
                                     {avatarFallback}
                                 </AvatarFallback>
-                                <Button variant="ghost" className="absolute top-10 -right-4 rounded-full">
-                                    <Pencil />
-                                </Button>
                             </Avatar>
                         </div>
                     </div>
@@ -104,10 +103,11 @@ const ProfilePage = async () => {
                 <Separator className="h-1 rounded-lg" />
                 <h1 className="mt-6 text-3xl font-bold text-neutral-600">Thống kê</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-10">
-                    <Statistic iconSrc={"/heart.svg"} Icon={"hearts"} value={!isPro ? userProgress.hearts.toString() : <InfinityIcon/>} unit={"Trái tim"} />
+                    <Statistic iconSrc={"/heart.svg"} Icon={"hearts"} value={!isPro ? userProgress.hearts.toString() : <InfinityIcon />} unit={"Trái tim"} />
                     <Statistic iconSrc={"/points.svg"} Icon={"points"} value={userProgress.points.toString()} unit={"Điểm"} />
                     <Statistic iconSrc={"/leaderboard.svg"} Icon={"leaderboard"} value={isInTopTen ? "Đạt top 10" : "Không có"} unit={"Top 10 người điểm cao"} />
-                </div>
+                    {isPro && <Statistic iconSrc={"/unlimited.svg"} Icon={"unlimited"} value="Thành viên VIP" unit={`Thành viên VIP tới ${formattedDueDate}`} />}
+                </div>  
 
                 <Separator className="h-1 rounded-lg" />
 

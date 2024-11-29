@@ -30,10 +30,10 @@ interface CourseIdPageProps {
 const CourseIdPage = async ({
     params,
 }: CourseIdPageProps) => {
-    const user = auth();
+    const user = await auth();
 
-    if (!user) {
-        return redirect("/auth/login");
+    if (!user || user.user.role === "USER") {
+        return redirect("/");
     }
 
     const course = await db.query.courses.findFirst({

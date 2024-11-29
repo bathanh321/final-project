@@ -13,7 +13,11 @@ export async function POST(
         const session = await auth();
         const { text, correct, imageSrc, audioSrc } = await req.json();
 
-        if (!session) {
+        if (!session?.user) {
+            return new NextResponse("Unauthorized", { status: 401 });
+        }
+
+        if (session?.user?.role !== "ADMIN" && session?.user?.role !== "STAFF") {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 

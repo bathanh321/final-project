@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import Image from "next/image";
 
-type Props = {
+interface CardProps{
     title: string;
     id: string;
     imageSrc: string | null;
@@ -18,7 +18,7 @@ export const Card = ({
     onClick,
     disabled,
     active
-}: Props) => {
+}: CardProps) => {
     return (
         <div
             onClick={() => onClick(id)}

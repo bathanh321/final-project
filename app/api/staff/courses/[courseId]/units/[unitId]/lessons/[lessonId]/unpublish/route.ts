@@ -15,6 +15,10 @@ export async function PATCH(
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
+        if (session?.user?.role !== "ADMIN" && session?.user?.role !== "STAFF") {
+            return new NextResponse("Unauthorized", { status: 401 });
+        }
+
         const courseOwner = await db.query.courses.findFirst({
             where: eq(courses.id, params.courseId),
         })

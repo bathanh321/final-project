@@ -1,4 +1,4 @@
-export const POINTS_TO_REFILL = 50;
+export const POINTS_TO_REFILL = 150;
 
 export const quests = [
     {

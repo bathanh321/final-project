@@ -19,10 +19,10 @@ interface LessonIdPageProps {
 }
 
 const LessonIdPage = async ({ params }: LessonIdPageProps) => {
-    const user = auth();
+    const user = await auth();
 
-    if (!user) {
-        return redirect("/auth/login")
+    if (!user || user.user.role === "USER") {
+        return redirect("/")
     }
 
     const lesson = await db.query.lessons.findFirst({

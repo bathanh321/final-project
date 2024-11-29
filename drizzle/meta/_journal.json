@@ -8,6 +8,41 @@
       "when": 1728935648432,
       "tag": "0000_flawless_william_stryker",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1732868701634,
+      "tag": "0001_mature_valeria_richards",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1732869074740,
+      "tag": "0002_cuddly_magdalene",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1732869303436,
+      "tag": "0003_green_celestials",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1732869332941,
+      "tag": "0004_absent_imperial_guard",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1732870235621,
+      "tag": "0005_optimal_amphibian",
+      "breakpoints": true
     }
   ]
 }

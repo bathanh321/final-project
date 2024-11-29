@@ -203,7 +203,6 @@ export const getLesson = cache(async (id?: string) => {
         }
     });
 
-    // Group challenges by difficulty level
     const groupedChallenges = normalizedChallenges.reduce((acc, challenge) => {
         const { difficultLevel } = challenge;
         if (difficultLevel == null) {
@@ -217,16 +216,13 @@ export const getLesson = cache(async (id?: string) => {
     }, {} as Record<number, typeof normalizedChallenges>);
 
     
-    const selectedChallenges = [];
-    for (const level in groupedChallenges) {
-        const challenges = groupedChallenges[level];
-        const shuffled = challenges.sort(() => 0.5 - Math.random());
-        selectedChallenges.push(...shuffled.slice(0, 2));
-    }
+    const shuffledChallenges = Object.values(groupedChallenges).flatMap((challenges) => {
+        return challenges.sort(() => 0.5 - Math.random());
+    });
 
     return {
         ...data,
-        challenges: selectedChallenges,
+        challenges: shuffledChallenges,
     }
 });
 
@@ -242,6 +238,8 @@ export const getLessonPercentage = cache(async () => {
     if (!lesson) {
         return 0;
     }
+
+    console.log(lesson);
 
     const completedChallenges = lesson.challenges
     .filter((challenge) => challenge.completed);

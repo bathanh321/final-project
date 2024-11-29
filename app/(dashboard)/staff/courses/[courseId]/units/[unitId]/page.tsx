@@ -22,9 +22,9 @@ interface UnitIdPageProps {
 const UnitIdPage = async ({
     params
 }: UnitIdPageProps) => {
-    const user = auth();
+    const user = await auth();
 
-    if (!user) {
+    if (!user || user.user.role === "USER") {
         return redirect("/auth/login")
     }
 

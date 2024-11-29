@@ -38,11 +38,7 @@ export const Sidebar = ({ className }: SidebarProps) => {
                         <>
                             <SidebarItem
                                 label="Users"
-                                href="/admin"
-                            />
-                            <SidebarItem
-                                label="Analytics"
-                                href="/admin/analytics"
+                                href="/admin/users"
                             />
                         </>
                     ) : isStaff ? (
@@ -52,16 +48,8 @@ export const Sidebar = ({ className }: SidebarProps) => {
                                 href="/staff/courses"
                             />
                             <SidebarItem
-                                label="Units"
-                                href="/staff/units"
-                            />
-                            <SidebarItem
-                                label="Lessons"
-                                href="/staff/lessons"
-                            />
-                            <SidebarItem
-                                label="Challenge"
-                                href="/staff/challenges"
+                                label="Analytics"
+                                href="/staff/analytics"
                             />
                         </>
                     ) : (

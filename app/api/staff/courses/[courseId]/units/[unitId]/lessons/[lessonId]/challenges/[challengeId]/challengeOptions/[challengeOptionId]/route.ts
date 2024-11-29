@@ -6,14 +6,14 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(
     req: Request,
-    { params }: { 
-        params: { 
-            courseId: string, 
+    { params }: {
+        params: {
+            courseId: string,
             unitId: string,
-            lessonId: string, 
+            lessonId: string,
             challengeId: string,
             challengeOptionId: string
-        } 
+        }
     }
 ) {
     try {
@@ -21,6 +21,10 @@ export async function PATCH(
         const values = await req.json();
 
         if (!session?.user) {
+            return new NextResponse("Unauthorized", { status: 401 });
+        }
+
+        if (session?.user?.role !== "ADMIN" && session?.user?.role !== "STAFF") {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
@@ -56,7 +60,7 @@ export async function PATCH(
             return new NextResponse("Challenge not found", { status: 404 });
         }
 
-        if(values.correct) {
+        if (values.correct) {
             const existingCorrectOption = await db.query.challengeOptions.findFirst({
                 where: and(
                     eq(challengeOptions.challengeId, params.challengeId),
@@ -64,10 +68,10 @@ export async function PATCH(
                 )
             })
 
-            if(existingCorrectOption) {
+            if (existingCorrectOption) {
                 await db.update(challengeOptions)
-                .set({ correct: false })
-                .where(eq(challengeOptions.id, existingCorrectOption.id))
+                    .set({ correct: false })
+                    .where(eq(challengeOptions.id, existingCorrectOption.id))
             }
         }
 

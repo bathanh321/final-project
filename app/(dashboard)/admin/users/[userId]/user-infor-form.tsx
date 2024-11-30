@@ -5,8 +5,6 @@ import {
     FormField,
     FormControl,
     FormItem,
-    FormLabel,
-    FormDescription,
     FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
@@ -15,7 +13,7 @@ import {
     CardHeader,
     CardContent,
 } from "@/components/ui/card";
-import { user, UserRole } from "@/db/schema";
+import { user } from "@/db/schema";
 import { format } from "date-fns";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
@@ -151,7 +149,7 @@ export const UserInfoForm = ({
                         Email Verified
                     </p>
                     <p className="truncate text-xs max-w-[180px] font-mono p-1 bg-slate-100 rounded-md">
-                        {format(user?.emailVerified, "PPP")}
+                        {user.emailVerified ? format(new Date(user.emailVerified), "PPP") : "Not Verified"}
                     </p>
                 </div>
             </CardContent>

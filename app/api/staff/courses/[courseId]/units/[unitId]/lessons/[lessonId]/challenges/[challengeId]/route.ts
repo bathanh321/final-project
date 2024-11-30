@@ -79,7 +79,7 @@ export async function PATCH(
 ) {
     try {
         const session = await auth();
-        const { isPublished, ...values } = await req.json();
+        const { ...values } = await req.json();
 
         if (!session?.user) {
             return new NextResponse("Unauthorized", { status: 401 });

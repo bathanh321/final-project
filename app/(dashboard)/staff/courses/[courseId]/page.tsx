@@ -1,9 +1,9 @@
 
 
 import db from "@/db/drizzle";
-import { courses, units } from "@/db/schema";
-import { asc, eq, sql } from "drizzle-orm";
-import { redirect, useRouter } from "next/navigation";
+import { courses } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
 import { Banner } from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
 import { LayoutDashboard, ListChecks } from "lucide-react";
@@ -12,14 +12,6 @@ import { ImageForm } from "./image-form";
 import { Actions } from "./actions";
 import { auth } from "@/auth";
 import { UnitsForm } from "./units-form";
-
-interface Unit {
-    id: string;
-    title: string;
-    description: string;
-    isPublished: boolean;
-    order: number;
-}
 
 interface CourseIdPageProps {
     params: {

@@ -1,4 +1,4 @@
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import db from "@/db/drizzle";

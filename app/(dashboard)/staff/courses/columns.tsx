@@ -7,6 +7,7 @@ import { courses } from "@/db/schema"
 import { cn } from "@/lib/utils"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal, Pencil } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 export const columns: ColumnDef<typeof courses>[] = [
@@ -19,7 +20,13 @@ export const columns: ColumnDef<typeof courses>[] = [
         header: "Image",
         cell: ({ row }) => (
             row.original.imageSrc ? (
-                <img src={row.original.imageSrc} className="rounded-sm max-w-20" />
+                <Image
+                    src={row.original.imageSrc as unknown as string}
+                    alt="Course Image"
+                    width={50}
+                    height={50}
+                    className="rounded-sm max-w-20"
+                />
             ) : "No Image"
         ),
     },

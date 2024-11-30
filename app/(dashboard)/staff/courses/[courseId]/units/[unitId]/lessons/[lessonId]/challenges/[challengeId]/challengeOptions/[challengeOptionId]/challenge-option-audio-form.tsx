@@ -6,9 +6,8 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { FileAudio, ImageIcon, Pencil, PlusCircle } from "lucide-react";
-import { ChallengeOptionSchemaAudioSrc, ChallengeOptionSchemaImageSrc } from "@/schemas";
-import Image from "next/image";
+import { FileAudio, Pencil, PlusCircle } from "lucide-react";
+import { ChallengeOptionSchemaAudioSrc } from "@/schemas";
 import { FileUpload } from "@/components/file-upload";
 
 interface ChallengeOptionAudioFormProps {

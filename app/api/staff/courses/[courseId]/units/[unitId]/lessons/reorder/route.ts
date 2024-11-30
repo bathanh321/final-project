@@ -33,7 +33,7 @@ export async function PUT(
             return new NextResponse("Unit not found", { status: 404 });
         }
 
-        for (let item of list) {
+        for (const item of list) {
             await db.update(lessons).set({
                 order: item.order
             })

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import db from "@/db/drizzle";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { ToastProvider } from "@/components/providers/toaster-provider";

@@ -1,5 +1,4 @@
 import { Sidebar } from "@/components/sidebar";
-import { Header } from "../(marketing)/header";
 import { MobileHeader } from "@/components/mobile-header";
 
 interface DashboardLayoutProps {

@@ -3,7 +3,7 @@ import { IconBadge } from "@/components/icon-badge";
 import db from "@/db/drizzle";
 import { challengeOptions } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { ArrowLeft, ImageIcon, LayoutDashboard, ListChecks } from "lucide-react";
+import { ArrowLeft, ImageIcon, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ChallengeOptionTextForm } from "./challenge-option-text-form";

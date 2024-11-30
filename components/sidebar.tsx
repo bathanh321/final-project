@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { Loader } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 import { UserButton } from "./auth/user-button";
 import { usePathname } from "next/navigation";
@@ -17,7 +16,6 @@ export const Sidebar = ({ className }: SidebarProps) => {
 
     const isAdmin = pathname.startsWith("/admin");
     const isStaff = pathname.startsWith("/staff");
-    const isUser = pathname.startsWith("/");
 
     return (
         <div className={cn(

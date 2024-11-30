@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import db from "@/db/drizzle";
-import { courses, units } from "@/db/schema";
+import { units } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 

@@ -10,7 +10,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Pencil } from "lucide-react";
-import { ChallengeSchemaChallengeOption, ChallengeSchemaQuestion } from "@/schemas";
+import { ChallengeSchemaChallengeOption } from "@/schemas";
 import { Input } from "@/components/ui/input";
 
 interface ChallengeOptionTextFormProps {

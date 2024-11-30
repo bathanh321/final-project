@@ -1,16 +1,6 @@
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import { challengeOptions } from "@/db/schema";
-
-interface ChallengeOption {
-    id: string;
-    text: string;
-    correct: boolean;
-    imageSrc: string;
-    audioSrc: string;
-}
 
 interface ChallengeOptionsListProps {
     items: typeof challengeOptions.$inferSelect[];

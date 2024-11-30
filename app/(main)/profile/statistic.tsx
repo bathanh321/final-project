@@ -1,9 +1,10 @@
 import Image from "next/image";
+import { ReactNode } from "react";
 
 interface StatisticProps {
     iconSrc: string;
     Icon: string;
-    value: any;
+    value: ReactNode;
     unit: string;
 }
 
@@ -24,7 +25,6 @@ export const Statistic = ({ iconSrc, Icon, value, unit }: StatisticProps) => {
                     {unit}
                 </p>
             </div>
-
         </div>
-    )
-}
+    );
+};

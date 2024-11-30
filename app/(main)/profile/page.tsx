@@ -11,7 +11,7 @@ import { getTopTenUsers, getUserProgress, getUserSubscription } from "@/db/queri
 import { redirect } from "next/navigation";
 import { format } from "date-fns";
 import Image from "next/image";
-import { InfinityIcon, Pencil } from "lucide-react";
+import { InfinityIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Statistic } from "./statistic";
 

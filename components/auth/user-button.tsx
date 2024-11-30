@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, KeyRound, Loader, User, UserIcon } from "lucide-react";
+import { FileText, KeyRound, Loader, UserIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
     DropdownMenu,

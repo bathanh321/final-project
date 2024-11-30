@@ -7,6 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, Pencil } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export const columns: ColumnDef<typeof user>[] = [
     {
@@ -21,12 +22,12 @@ export const columns: ColumnDef<typeof user>[] = [
         accessorKey: "emailVerified",
         header: "Email Verified",
         cell: ({ row }) => {
-            const emailVerified = row.original.emailVerified;
+            const emailVerified = row.original.emailVerified as unknown as string;
 
             return (
                 <div>
                     <span className="truncate">
-                        {format(emailVerified, "PPP")}
+                        {emailVerified ? format(new Date(emailVerified), "PPP") : "Not Verified"}
                     </span>
                 </div>
             )
@@ -37,7 +38,13 @@ export const columns: ColumnDef<typeof user>[] = [
         header: "Image",
         cell: ({ row }) => (
             row.original.image ? (
-                <img src={row.original.image} className="rounded-sm max-w-20" />
+                <Image
+                    src={row.original.image as unknown as string}
+                    alt="Profile Image"
+                    width={50}
+                    height={50}
+                    className="rounded-sm max-w-20"
+                />
             ) : "No Image"
         ),
     },

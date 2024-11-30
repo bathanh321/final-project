@@ -13,14 +13,6 @@ import { Grip, Pencil } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { units } from "@/db/schema";
 
-interface Unit {
-    id: string;
-    title: string;
-    description: string | null;
-    isPublished: boolean;
-    order: number;
-}
-
 interface UnitsListProps {
     items: typeof units.$inferSelect[];
     onReorder: (updateData: { id: string, order: number }[]) => void;

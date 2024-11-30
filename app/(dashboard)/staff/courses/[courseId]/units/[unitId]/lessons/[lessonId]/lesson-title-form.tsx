@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Pencil } from "lucide-react";
-import { LessonSchemaTitle, UnitSchemaTitle } from "@/schemas";
+import { LessonSchemaTitle } from "@/schemas";
 
 interface LessonTitleFormProps {
     initialData: {

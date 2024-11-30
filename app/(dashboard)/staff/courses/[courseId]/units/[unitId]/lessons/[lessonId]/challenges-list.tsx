@@ -4,15 +4,6 @@ import { cn } from "@/lib/utils";
 import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 
-interface Challenge {
-    id: string;
-    question: string;
-    type: "SELECT" | "ASSIST";
-    difficultLevel: number;
-    isPublished: boolean;
-    order: number;
-}
-
 interface ChallengesListProps {
     items: typeof challenges.$inferSelect[];
     onEdit: (id: string) => void;

@@ -3,8 +3,6 @@ import db from "@/db/drizzle";
 import { redirect } from "next/navigation";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { eq } from "drizzle-orm";
-import { user as users, userSubscription } from "@/db/schema";
 import { format, subMonths } from "date-fns";
 import { Chart } from "./chart";
 

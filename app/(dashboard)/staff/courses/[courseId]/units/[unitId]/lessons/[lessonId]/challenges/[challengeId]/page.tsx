@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
 import { IconBadge } from "@/components/icon-badge";
 import db from "@/db/drizzle";
-import { challengeOptions, challenges } from "@/db/schema";
-import { and, eq, not } from "drizzle-orm";
+import { challenges } from "@/db/schema";
+import { and, eq } from "drizzle-orm";
 import { ArrowLeft, LayoutDashboard, ListChecks } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";

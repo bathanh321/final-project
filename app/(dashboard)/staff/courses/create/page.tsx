@@ -1,5 +1,5 @@
 
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { CreateCourseForm } from "./create-course-form";
 import { auth } from "@/auth";
 

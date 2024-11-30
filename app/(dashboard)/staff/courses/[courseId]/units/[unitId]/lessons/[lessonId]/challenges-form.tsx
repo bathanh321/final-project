@@ -16,15 +16,6 @@ import { cn } from "@/lib/utils";
 import { ChallengesList } from "./challenges-list";
 import { lessons } from "@/db/schema";
 
-interface Challenge {
-    id: string;
-    question: string;
-    type: "SELECT" | "ASSIST";
-    difficultLevel: number;
-    isPublished: boolean;
-    order: number;
-}
-
 interface ChallengesFormProps {
     initialData: typeof lessons.$inferSelect & { challenges: typeof lessons.$inferSelect[] },
     lessonId: string;

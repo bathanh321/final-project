@@ -3,8 +3,8 @@ import { UnitBanner } from "./unit-banner";
 import { LessonButton } from "./lesson-button";
 
 interface UnitProps {
-    id: string,
-    order: number,
+    //id: string,
+    //order: number,
     title: string,
     description: string | null,
     lessons: (typeof lessons.$inferSelect & {
@@ -17,8 +17,8 @@ interface UnitProps {
 };
 
 export const Unit = ({
-    id,
-    order,
+    //id,
+    //order,
     title,
     description,
     lessons,

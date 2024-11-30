@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import db from "@/db/drizzle";
 import { challenges, courses, lessons, units } from "@/db/schema";
-import { and, asc, eq, is } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function PATCH(

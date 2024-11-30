@@ -1,10 +1,5 @@
 import { auth } from "@/auth";
-import { RoleGate } from "@/components/auth/role-gate";
-import { FormSuccess } from "@/components/form-success";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { getUserById } from "@/data/user";
-import { UserRole } from "@/db/schema";
 import { redirect } from "next/navigation";
 import { UserInfoForm } from "./user-infor-form";
 import Link from "next/link";

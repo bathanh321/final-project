@@ -8,10 +8,9 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem } from "@/components/ui/form";
 import { Pencil } from "lucide-react";
-import { ChallengeOptionSchemaCorrect, ChallengeSchemaChallengeOption, ChallengeSchemaQuestion } from "@/schemas";
-import { Input } from "@/components/ui/input";
+import { ChallengeOptionSchemaCorrect } from "@/schemas";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 

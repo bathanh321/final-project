@@ -239,8 +239,6 @@ export const getLessonPercentage = cache(async () => {
         return 0;
     }
 
-    console.log(lesson);
-
     const completedChallenges = lesson.challenges
     .filter((challenge) => challenge.completed);
 

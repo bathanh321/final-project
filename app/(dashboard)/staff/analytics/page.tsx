@@ -48,16 +48,18 @@ const AnalyticsPage = async () => {
         return acc;
     }, {} as Record<string, number>);
 
-    const chartData = Object.keys(monthlyData).map((month) => ({
+    const allMonths = Array.from({ length: 12 }, (_, i) => format(new Date(2024, i, 1), "MMM yyyy"));
+
+    const chartData = allMonths.map(month => ({
         name: month,
-        total: monthlyData[month],
+        total: monthlyData[month] || 0,
     }));
 
     return (
         <div>
             <DataTable columns={columns} data={subscriptionWithUserName} />
             <div className="p-6">
-                <h1 className="text-2xl font-bold mb-4">Analytics</h1>
+                <h1 className="text-2xl font-bold mb-4">Subscription user in 2024</h1>
                 <Chart data={chartData} />
             </div>
         </div>

@@ -34,9 +34,7 @@ const ChallengeIdPage = async ({ params }: ChallengeIdPageProps) => {
             eq(challenges.lessonId, params.lessonId),
         ),
         with: {
-            challengeOptions: {
-                orderBy: (challengeOptions, { asc }) => [asc(challengeOptions.correct)]
-            }
+            challengeOptions: true
         }
     })
 

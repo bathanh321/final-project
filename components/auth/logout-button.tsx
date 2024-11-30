@@ -2,6 +2,12 @@
 
 import { logout } from "@/actions/logout";
 
+import {
+    Dialog,
+    DialogContent,
+    DialogTrigger
+} from "@/components/ui/dialog";
+
 interface LogoutButtonProps {
     children?: React.ReactNode;
 };

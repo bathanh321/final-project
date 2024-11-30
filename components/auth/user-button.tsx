@@ -13,6 +13,7 @@ import { LogoutButton } from "./logout-button";
 import { ExitIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { LoginButton } from "./login-button";
 
 export const UserButton = () => {
     const { user, isLoading } = useCurrentUser();
@@ -33,9 +34,11 @@ export const UserButton = () => {
     if (!user) {
         return (
             <div className="flex space-x-2">
-                <Button asChild>
-                    <Link href="/auth/login">Đăng nhập</Link>
-                </Button>
+                <LoginButton mode="modal">
+                    <Button>
+                        Đăng nhập
+                    </Button>
+                </LoginButton>
                 <Button asChild>
                     <Link href="/auth/register">Đăng ký</Link>
                 </Button>

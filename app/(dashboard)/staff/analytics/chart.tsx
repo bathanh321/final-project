@@ -26,13 +26,10 @@ export const Chart = ({ data }: ChartProps) => {
                         stroke="#888888"
                         fontSize={12}
                         tickLine={false}
-                        axisLine={false}
                     />
                     <YAxis
                         stroke="#888888"
                         fontSize={12}
-                        tickLine={false}
-                        axisLine={false}
                         tickFormatter={(value) => value}
                     />
                     <Bar dataKey="total" fill="#0369a1" />
